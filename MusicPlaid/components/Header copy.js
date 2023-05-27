@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <View style={styles.container}>
         <TouchableOpacity>
-            <Image style={styles.logo} source={require('../assets/image1.png')} />
+            <Image style={styles.logo} source={require('../../assets/image1.png')} />
         </TouchableOpacity>
 
 
