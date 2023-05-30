@@ -14,19 +14,19 @@ const Header = () => {
         <TouchableOpacity> 
             <Image 
             source={ {
-                uri: 'https://img.icons8.com/fluency-systems-regular/60/ffffff/add-song.png',
+                uri: 'https://img.icons8.com/fluency-systems-regular/60/ffffff/bell.png',
             }}
             style={styles.icon}
             />
             
         </TouchableOpacity>
         <TouchableOpacity> 
-            <View style={styles.unreadBadge}>
+            {/* <View style={styles.unreadBadge}>
                 <Text style={styles.unreadBadgeText}>11</Text>
-            </View>
+            </View> */}
             <Image 
             source={ {
-                uri: 'https://img.icons8.com/fluency-systems-regular/60/ffffff/like--v1.png',
+                uri: 'https://img.icons8.com/fluency-systems-regular/60/ffffff/settings.png',
             }}
             style={styles.icon}
             />
