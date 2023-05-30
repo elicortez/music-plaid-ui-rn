@@ -3,7 +3,7 @@ import { USERS } from './users'
 export const POSTS = [
   {
     imageUrl:
-      'https://images.pexels.com/photos/92248/pexels-photo-92248.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+      'https://upload.wikimedia.org/wikipedia/en/b/b7/NirvanaNevermindalbumcover.jpg',
     user: USERS[0].user,
     likes: 7870,
     caption: 'Train Ride to Hogwarts. #hogwartsexpress #magic #harrypotter Test long lines',

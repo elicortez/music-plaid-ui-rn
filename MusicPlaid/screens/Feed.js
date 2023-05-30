@@ -4,29 +4,21 @@ import {
   } from 'react-native-safe-area-context';
 import React from 'react'
 import Header from '../components/Header'
-import Stories from '../components/Stories'
 import Post from '../components/Post'
 import { POSTS } from '../data/posts';
 import BottomTabs, {bottomTabsIcons} from '../components/BottomTabs';
-import ProfilePicure from '../components/ProfilePicure';
-import FavoriteArtists from '../components/FavoriteArtists';
-import LatestTracks from '../components/LatestTracks';
 
-const Profile = () => {
+const Feed = () => {
   return (
     <SafeAreaView style={styles.container}>
         <Header/>
-        <ProfilePicure/>
-        <FavoriteArtists/>
-        <LatestTracks  />
-        {/*<Stories/>
          <ScrollView>
             {POSTS.map((post, index) => (
                 <Post key={index} post={post}/>
             ))}
         </ScrollView>
-        */}
-        <BottomTabs icons={bottomTabsIcons}/> 
+        
+        <BottomTabs icons={bottomTabsIcons}/>
     </SafeAreaView>
       )
 }
@@ -39,4 +31,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Profile
+export default Feed

@@ -1,15 +1,15 @@
 export const USERS = [
     {
-      user: 'Daltonic',
-      image: 'https://avatars.githubusercontent.com/u/29388627?v=4',
+      user: 'Alisson',
+      image: 'https://avatars.githubusercontent.com/u/8888741?v=4',
     },
     {
-      user: 'Bobby',
-      image: 'https://randomuser.me/api/portraits/men/31.jpg',
+      user: 'Rafael',
+      image: 'https://avatars.githubusercontent.com/u/1468598?v=4',
     },
     {
-      user: 'Success',
-      image: 'https://randomuser.me/api/portraits/women/2.jpg',
+      user: 'Raphael',
+      image: 'https://media.licdn.com/dms/image/C5603AQF1gM_VBC2moA/profile-displayphoto-shrink_200_200/0/1618946012218?e=1691020800&v=beta&t=vhmH_LlYju5NVQM6YPRHOT7UTyFHexSu7LM3OFnnEQ0',
     },
     {
       user: 'Matt',

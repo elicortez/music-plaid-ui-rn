@@ -31,9 +31,16 @@ const PostHeader =({post}) => (
 
 
 const PostImage = ({post}) => (
-    <View style={{width: '100%', height: 450}}>
-        <Image source={{uri: post.imageUrl}} style={{height: '100%', resizeMode: 'cover'}} />
-    </View>
+<View style={{ width: '100%', height: 120, alignItems: 'center', justifyContent: 'center' }}>
+  <Image source={{ uri: post.imageUrl }} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
+  <View style={styles.overlay}>
+    <Text style={{ textAlign: 'center', fontSize: 20, color: 'white' }}>
+      Smells like teen spirit 🎸
+    </Text>
+  </View>
+</View>
+
+
 )
 
 
@@ -115,12 +122,12 @@ const postFooterIcons = [
 
 const styles = StyleSheet.create({
     story: {
-        width: 35,
-        height: 35,
+        width: 50,
+        height: 50,
         borderRadius: 50,
         marginLeft: 6,
-        borderWidth: 1.6,
-        borderColor: '#ff8501',
+        borderWidth: 1,
+        borderColor: 'white',
     },
     footerIcon: {
         width: 33,
@@ -135,6 +142,17 @@ const styles = StyleSheet.create({
         transform: [{rotate: '320deg'}],
         marginTop: -3,
     },
+    overlay: {
+        position: 'absolute',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        padding: 8,
+        borderRadius: 8,
+        left: '50%',
+        top: '50%',
+        transform: [{ translateX: -50 }, { translateY: -50 }],
+      },
 })
 
 
