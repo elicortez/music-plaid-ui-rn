@@ -1,11 +1,6 @@
-import Feed from "./screens/Feed";
-import LoginScreen from "./screens/Login";
-import Profile from "./screens/Profile";
+import React from 'react'
+import AuthNavigation from './AuthNavigation'
 
 export default function App() {
-  return (
-    //<Profile/>
-    //<LoginScreen/>
-    <Feed/>
-  );
+  return <AuthNavigation />
 }
