@@ -31,11 +31,11 @@ const App = () => {
       <Stack.Navigator screenOptions={screenOption}>
         {console.log('stack User state in App', user === null)}
         {user === null ? (
-          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Login" component={Login} options={{ title: 'MusicPlaid' }}/>
         ) : (
           <>
-            <Stack.Screen name="Profile" component={Profile} />
-            <Stack.Screen name="Feed" component={Feed} />
+            <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} />
+            <Stack.Screen name="Feed" component={Feed} options={{ title: 'Discovery' }}/>
           </>
         )}
       </Stack.Navigator>

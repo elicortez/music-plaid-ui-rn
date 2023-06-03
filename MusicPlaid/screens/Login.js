@@ -1,33 +1,27 @@
 import React, {useContext, useEffect} from 'react'
-import { Image, StyleSheet, Text, View, KeyboardAvoidingView, Platform } from 'react-native'
+import { Image, StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native'
 import { Button } from "react-native-elements";
-import { ResponseType, useAuthRequest } from "expo-auth-session";
 import { AuthContext } from '../AuthContext';
 import * as AuthSession from 'expo-auth-session';
+import axios from 'axios';
 
-// const discovery = {
-//   authorizationEndpoint: "https://accounts.spotify.com/authorize",
-//   tokenEndpoint: "https://accounts.spotify.com/api/token",
-// };
-
-const spotifyClientId = 'f99460ad37214fb4974e49ff36421725';
+const spotifyClientId = '7e722168f9d448c59db128e846fcac91';
+const spotifyClientSecret = '43cc5e3eab3d4af2a2b4e0b067e284ec';
 let redirectUri;
-if (Platform.OS === 'web') {
-  redirectUri = 'http://localhost:19006/auth';
-} else {
-  redirectUri = AuthSession.makeRedirectUri({ scheme: 'spotifyauthapp' });
-}
+redirectUri = 'https://musicwebapp-bdbe8.web.app/auth';
+//redirectUri = 'http://localhost:19006/auth';
+
 
 
 const Login = () => {
 
-  const { setUser } = useContext(AuthContext);
+  const { setUser, setSpotifyProfile, setAppBackedInfo, setTopArtists } = useContext(AuthContext);
+  
   let code = new URL(window.location.href).searchParams.get('code');
+  let accessToken = '';
 
   const handleSignIn = async () => {
     console.log('Sign in button clicked');
-
-    if (Platform.OS === 'web') {
       window.open(
         `https://accounts.spotify.com/authorize?` +
         `client_id=${spotifyClientId}` +
@@ -36,79 +30,54 @@ const Login = () => {
         `&scope=user-read-private%20user-read-email`,
         "_self"
       );
-    } else {
-      const result = await AuthSession.startAsync({
-        authUrl:
-          `https://accounts.spotify.com/authorize?` +
-          `client_id=${spotifyClientId}` +
-          `&response_type=code` +
-          `&redirect_uri=${encodeURIComponent(redirectUri)}` +
-          `&scope=user-read-private%20user-read-email`,
-      });
-
-      if (result.type === 'success') {
-        setUser(result.params.code);
-        
-      }
-    }
   };
 
   useEffect(() => {
-    console.log('User state in UnAuthScreen', code);
     if (code === null) {
       return;
     }
-
     setUser(code);
-   
   }, []);
 
- 
-
-  // const [access_token] = "";
-  // const [request, response, promptAsync] = useAuthRequest(
-  //   {
-  //     responseType: ResponseType.Token,
-  //     clientId: "f99460ad37214fb4974e49ff36421725",
-  //     scopes: [
-  //       "user-read-currently-playing",
-  //       "user-read-recently-played",
-  //       "user-read-playback-state",
-  //       "user-top-read",
-  //       "user-modify-playback-state",
-  //       "streaming",
-  //       "user-read-email",
-  //       "user-read-private",
-  //     ],
-  //     // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
-  //     // this must be set to false
-  //     usePKCE: false,
-  //     redirectUri: "https://192.168.1.157:19006",
-  //   },
-  //   discovery
-  // );
-
-  // useEffect(() => {
-  //   if (response?.type === "success") {
-  //     access_token  = response.params.access_token;
-  //     console.log(access_token);
-  //   }
-  // }, [response]);
-
-  // useEffect(() => {
-  //   if (access_token) {
-  //     console.log(access_token);
-  //     setTimeout(
-  //       () =>
-  //         navigation.replace("Profile", {
-  //           token: access_token,
-  //           other: "blaaaa",
-  //         }),
-  //       500
-  //     );
-  //   }
-
-  // });
+  useEffect(() => {
+    const fetchData = async () => {
+      if (code) {
+      try {
+        const response = await axios.post('https://accounts.spotify.com/api/token', 
+          `grant_type=authorization_code&code=${code}&redirect_uri=${encodeURIComponent(redirectUri)}&client_id=${spotifyClientId}&client_secret=${spotifyClientSecret}`, 
+          {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            }
+          }
+        );
+  
+        // Get the access token from the response
+        const data = response.data;
+        accessToken = data.access_token;
+        console.log('Access token: ', accessToken);
+  
+        axios("https://api.spotify.com/v1/me", {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + accessToken,
+          },
+        })
+          .then((response) => {
+            console.log('Spotify profile: ', response.data);
+            setSpotifyProfile(response.data);
+          })
+  
+      } catch(error) {
+        // Handle error
+        console.log(error);
+      }
+    }
+    };
+    fetchData();
+  }, [code]);
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>

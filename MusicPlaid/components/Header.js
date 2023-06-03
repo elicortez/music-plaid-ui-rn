@@ -11,7 +11,8 @@ const Header = () => {
     const handleSignOut = () => {
         console.log('Sign out button clicked');
         setUser(null);
-        window.location = 'http://localhost:19006/';
+        window.location = 'https://musicwebapp-bdbe8.web.app/';
+        //window.location = 'http://localhost:19006/';
     };
 
   return (
