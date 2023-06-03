@@ -4,7 +4,7 @@ import { ARTISTS } from '../data/artists'
 
 const FavoriteArtists = () => {
   return (
-    <View style={{marginBottom: 20}}>
+    <View style={{marginBottom: 0}}>
         <View>
         <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold', marginBottom:10, marginLeft: 10}}>Favorite Artists</Text>
         </View>

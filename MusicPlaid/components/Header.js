@@ -1,32 +1,29 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
-
+import React, { useContext } from 'react'
+import { useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../AuthContext';
 
 const Header = () => {
+    const navigation = useNavigation();
+    const { user, setUser } = useContext(AuthContext);
+
+
+    const handleSignOut = () => {
+        console.log('Sign out button clicked');
+        setUser(null);
+        window.location = 'http://localhost:19006/';
+    };
+
   return (
     <View style={styles.container}>
         <TouchableOpacity>
             <Image style={styles.logo} source={require('../assets/image1.png')} />
         </TouchableOpacity>
-
-
         <View style={styles.iconsContainer}> 
-        <TouchableOpacity> 
+        <TouchableOpacity onPress={() => handleSignOut()}> 
             <Image 
             source={ {
-                uri: 'https://img.icons8.com/fluency-systems-regular/60/ffffff/bell.png',
-            }}
-            style={styles.icon}
-            />
-            
-        </TouchableOpacity>
-        <TouchableOpacity> 
-            {/* <View style={styles.unreadBadge}>
-                <Text style={styles.unreadBadgeText}>11</Text>
-            </View> */}
-            <Image 
-            source={ {
-                uri: 'https://img.icons8.com/fluency-systems-regular/60/ffffff/settings.png',
+                uri: 'https://img.icons8.com/fluency-systems-regular/60/ffffff/exit.png',
             }}
             style={styles.icon}
             />

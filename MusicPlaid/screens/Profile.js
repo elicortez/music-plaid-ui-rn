@@ -1,13 +1,11 @@
-import { View, Text, StyleSheet,ScrollView } from 'react-native'
+import { StyleSheet } from 'react-native'
 import {
     SafeAreaView,
   } from 'react-native-safe-area-context';
 import React from 'react'
 import Header from '../components/Header'
-import Stories from '../components/Stories'
-import Post from '../components/Post'
-import { POSTS } from '../data/posts';
-import BottomTabs, {bottomTabsIcons} from '../components/BottomTabs';
+
+import Footer from '../components/Footer';
 import ProfilePicure from '../components/ProfilePicure';
 import FavoriteArtists from '../components/FavoriteArtists';
 import LatestTracks from '../components/LatestTracks';
@@ -19,16 +17,9 @@ const Profile = () => {
         <ProfilePicure/>
         <FavoriteArtists/>
         <LatestTracks  />
-        {/*<Stories/>
-         <ScrollView>
-            {POSTS.map((post, index) => (
-                <Post key={index} post={post}/>
-            ))}
-        </ScrollView>
-        */}
-        <BottomTabs icons={bottomTabsIcons}/> 
+        <Footer /> 
     </SafeAreaView>
-      )
+  )
 }
 
 

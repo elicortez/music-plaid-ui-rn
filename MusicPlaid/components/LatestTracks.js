@@ -5,7 +5,7 @@ import { TRACKS } from '../data/tracks'
 
 const LatestTracks = () => {
     return (
-        <View style={{marginBottom: 50}}>
+        <View style={{marginBottom: 10}}>
             <View>
             <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold', marginBottom:10, marginLeft: 10}}>Latest Tracks</Text>
             </View>
