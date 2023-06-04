@@ -8,8 +8,8 @@ import axios from 'axios';
 const spotifyClientId = '7e722168f9d448c59db128e846fcac91';
 const spotifyClientSecret = '43cc5e3eab3d4af2a2b4e0b067e284ec';
 let redirectUri;
-redirectUri = 'https://musicwebapp-bdbe8.web.app/auth';
-//redirectUri = 'http://localhost:19006/auth';
+//redirectUri = 'https://musicwebapp-bdbe8.web.app/auth';
+redirectUri = 'http://localhost:19006/auth';
 
 
 
@@ -27,7 +27,7 @@ const Login = () => {
         `client_id=${spotifyClientId}` +
         `&response_type=code` +
         `&redirect_uri=${encodeURIComponent(redirectUri)}` +
-        `&scope=user-read-private%20user-read-email`,
+        `&scope=user-read-currently-playing%20user-read-recently-played%20user-top-read%20user-read-email`,
         "_self"
       );
   };
@@ -54,6 +54,7 @@ const Login = () => {
   
         // Get the access token from the response
         const data = response.data;
+        console.log('response data: ', data)
         accessToken = data.access_token;
         console.log('Access token: ', accessToken);
   
@@ -69,6 +70,22 @@ const Login = () => {
             console.log('Spotify profile: ', response.data);
             setSpotifyProfile(response.data);
           })
+
+          // // Just testing calling server api using token in header
+          // const userDataUrl = 'http://127.0.0.1:8080/user_data'
+          // axios(userDataUrl, {
+          //   method: "GET",
+          //   headers: {
+          //     Accept: "application/json",
+          //     "Content-Type": "application/json",
+          //     "spotify-token": JSON.stringify(data),
+          //     Authorization: "Bearer " + accessToken,
+          //   },
+          // })
+          //   .then((response) => {
+          //     console.log('User Data: ', response.data);
+          //   })
+  
   
       } catch(error) {
         // Handle error
