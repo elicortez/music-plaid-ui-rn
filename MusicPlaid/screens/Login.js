@@ -3,81 +3,93 @@ import { Image, StyleSheet, Text, View, KeyboardAvoidingView } from 'react-nativ
 import { Button } from "react-native-elements";
 import { AuthContext } from '../AuthContext';
 import * as AuthSession from 'expo-auth-session';
+import { ResponseType, useAuthRequest } from "expo-auth-session";
 import axios from 'axios';
+import * as WebBrowser from 'expo-web-browser';
+WebBrowser.maybeCompleteAuthSession();
 
 const spotifyClientId = '7e722168f9d448c59db128e846fcac91';
 const spotifyClientSecret = '43cc5e3eab3d4af2a2b4e0b067e284ec';
 let redirectUri;
-redirectUri = 'https://musicwebapp-bdbe8.web.app/auth';
-//redirectUri = 'http://localhost:19006/auth';
+//redirectUri = 'https://musicwebapp-bdbe8.web.app/auth';
+redirectUri = 'https://localhost:19006/';
+//redirectUri = 'exp://192.168.1.157:19000';
 
 
+const discovery = {
+  authorizationEndpoint: "https://accounts.spotify.com/authorize",
+  tokenEndpoint: "https://accounts.spotify.com/api/token",
+};
 
-const Login = () => {
+const Login = ({ navigation }) => {
 
   const { setUser, setSpotifyProfile, setAppBackedInfo, setTopArtists } = useContext(AuthContext);
   
-  let code = new URL(window.location.href).searchParams.get('code');
-  let accessToken = '';
+  let accessToken = null;
+  let code = null;
+  let access_token = null;
 
-  const handleSignIn = async () => {
-    console.log('Sign in button clicked');
-      window.open(
-        `https://accounts.spotify.com/authorize?` +
-        `client_id=${spotifyClientId}` +
-        `&response_type=code` +
-        `&redirect_uri=${encodeURIComponent(redirectUri)}` +
-        `&scope=user-read-private%20user-read-email`,
-        "_self"
-      );
-  };
+  const [request, response, promptAsync] = useAuthRequest(
+    {
+      responseType: ResponseType.Token,
+      clientId: "7e722168f9d448c59db128e846fcac91",
+      scopes: [
+        "user-read-currently-playing",
+        "user-read-recently-played",
+        "user-read-playback-state",
+        "user-top-read",
+        "user-modify-playback-state",
+        "streaming",
+        "user-read-email",
+        "user-read-private",
+      ],
+      // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
+      // this must be set to false
+      usePKCE: false,
+      redirectUri: redirectUri,
+    },
+    discovery
+  );
 
   useEffect(() => {
-    if (code === null) {
-      return;
+    if (response?.type === "success") {
+      access_token = response.params.access_token;
+      setUser(access_token);
+      
     }
-    setUser(code);
-  }, []);
+  }, [response]);
+
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (code) {
-      try {
-        const response = await axios.post('https://accounts.spotify.com/api/token', 
-          `grant_type=authorization_code&code=${code}&redirect_uri=${encodeURIComponent(redirectUri)}&client_id=${spotifyClientId}&client_secret=${spotifyClientSecret}`, 
-          {
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            }
-          }
-        );
-  
-        // Get the access token from the response
-        const data = response.data;
-        accessToken = data.access_token;
-        console.log('Access token: ', accessToken);
-  
-        axios("https://api.spotify.com/v1/me", {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + accessToken,
-          },
+
+    if (access_token) {
+      console.log('Access token: ', access_token);
+      axios("https://api.spotify.com/v1/me", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + access_token,
+        },
+      })
+        .then((response) => {
+          console.log('Spotify profile: ', response.data);
+          setSpotifyProfile(response.data);
         })
-          .then((response) => {
-            console.log('Spotify profile: ', response.data);
-            setSpotifyProfile(response.data);
-          })
-  
-      } catch(error) {
-        // Handle error
-        console.log(error);
-      }
+        .catch((error) => {
+          console.log("error", error.message);
+        });
+
+      setTimeout(
+        () =>
+          navigation.replace("Feed", {
+            token: accessToken,
+            other: "blaaaa",
+          }),
+        500
+      );
     }
-    };
-    fetchData();
-  }, [code]);
+  });
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -92,7 +104,7 @@ const Login = () => {
         }}
         buttonStyle={styles.button}
         onPress={() => {
-          handleSignIn();
+          promptAsync();
         }}
       />
       <View style={{ height: 100 }} />

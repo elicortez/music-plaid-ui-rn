@@ -15,4 +15,8 @@ export const ARTISTS = [
       user: 'Brunce Springsteen',
       image: 'https://upload.wikimedia.org/wikipedia/en/7/7a/Born_to_Run_%28Front_Cover%29.jpg',
     },
+    {
+      user: 'Brunce Springsteen',
+      image: 'https://upload.wikimedia.org/wikipedia/en/7/7a/Born_to_Run_%28Front_Cover%29.jpg',
+    },
   ]

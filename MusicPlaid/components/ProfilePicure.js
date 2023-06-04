@@ -1,13 +1,25 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
-import React from 'react'
+import React, {useContext} from 'react'
+import { AuthContext } from '../AuthContext';
+import { Icon } from 'react-native-elements';
 
 const ProfilePicure = () => {
+
+  const {spotifyProfile } = useContext(AuthContext);
   return (
     <View>
     <View style={{ alignItems: 'center'}}>
       <Image source={{uri: "https://cortez.me/images/eli.jpg"}} style={styles.story} />
         <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold', marginTop: 10}}>Eli Cortez</Text>
-        <Text style={{color: 'white', fontSize: 15, marginTop: 1}}>@elicortez</Text>
+        <View style={{flexDirection: 'row', marginTop: 10}}>
+        <Icon
+          name='spotify'
+          type='font-awesome'
+          color='white'
+          size={30}
+        />
+        <Text style={{color: 'white', fontSize: 18, marginTop: 1}}> {spotifyProfile.display_name}</Text>
+        </View>
     </View>
     <View style={{ marginTop: 40, marginBottom:30, alignItems: 'center'}}>
         <Text style={{color: 'white', fontSize: 25, fontWeight: 'bold'}}>17             270</Text>

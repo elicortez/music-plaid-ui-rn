@@ -18,8 +18,8 @@ const Footer = () => {
 
  
     return (
+      <View style={styles.wrapper}>
         <View style={styles.container}>
-
         <TouchableOpacity onPress={() => handleFeed()}> 
             <Image 
             source={ {
@@ -37,12 +37,19 @@ const Footer = () => {
             />
         </TouchableOpacity>
         </View>
+      </View>
 
       )
   }
 export default Footer
 
 const styles = StyleSheet.create({
+  wrapper: {
+    position: 'sticky',
+    width: '100%',
+    bottom: 0,
+    backgroundColor: '#000',
+  },
     container: {
       flexDirection: 'row',
       justifyContent: 'space-around',
