@@ -9,11 +9,10 @@ import * as WebBrowser from 'expo-web-browser';
 WebBrowser.maybeCompleteAuthSession();
 
 const spotifyClientId = '7e722168f9d448c59db128e846fcac91';
-const spotifyClientSecret = '43cc5e3eab3d4af2a2b4e0b067e284ec';
 let redirectUri;
-//redirectUri = 'https://musicwebapp-bdbe8.web.app/auth';
-redirectUri = 'https://localhost:19006/';
-//redirectUri = 'exp://192.168.1.157:19000';
+redirectUri = 'https://musicwebapp-bdbe8.web.app/';
+//redirectUri = 'https://localhost:19006/';
+
 
 
 const discovery = {
@@ -32,7 +31,7 @@ const Login = ({ navigation }) => {
   const [request, response, promptAsync] = useAuthRequest(
     {
       responseType: ResponseType.Token,
-      clientId: "7e722168f9d448c59db128e846fcac91",
+      clientId: spotifyClientId,
       scopes: [
         "user-read-currently-playing",
         "user-read-recently-played",
