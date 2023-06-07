@@ -30,8 +30,8 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={screenOption}>
           <Stack.Screen name="Login" component={Login} options={{ title: 'MusicPlaid' }}/>
-          <Stack.Screen name="Feed" component={Feed} options={{ title: 'Discovery' }}/>
           <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} />
+          <Stack.Screen name="Feed" component={Feed} options={{ title: 'Discovery' }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

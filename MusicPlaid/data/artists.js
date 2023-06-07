@@ -12,11 +12,11 @@ export const ARTISTS = [
       image: 'https://api.floodmagazine.com/wp-content/uploads/2014/10/belleandsebastian-thelifepursuit.jpg',
     },
     {
-      user: 'Brunce Springsteen',
+      user: 'Bruce Springsteen',
       image: 'https://upload.wikimedia.org/wikipedia/en/7/7a/Born_to_Run_%28Front_Cover%29.jpg',
     },
     {
-      user: 'Brunce Springsteen',
+      user: 'Bruce Springsteen',
       image: 'https://upload.wikimedia.org/wikipedia/en/7/7a/Born_to_Run_%28Front_Cover%29.jpg',
     },
   ]
