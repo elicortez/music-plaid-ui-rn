@@ -12,6 +12,7 @@ const spotifyClientId = 'f99460ad37214fb4974e49ff36421725';
 let redirectUri;
 var currentURL = window.location.href;
 redirectUri = currentURL;
+console.log('Redirect URI: ', redirectUri);
 //redirectUri = 'https://musicwebapp-bdbe8.web.app/';
 //redirectUri = 'http://localhost:19006/';
 
@@ -61,7 +62,7 @@ const Login = ({ navigation }) => {
       setUser(access_token);
       
           // Just testing calling server api using token in header
-          const userDataUrl = 'http://127.0.0.1:8080/user_data'
+          const userDataUrl = 'https://musicplaid.wm.r.appspot.com/user_data'
           axios(userDataUrl, {
             method: "GET",
             headers: {

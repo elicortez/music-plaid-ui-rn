@@ -6,6 +6,7 @@ import { Icon } from 'react-native-elements';
 const ProfilePicure = () => {
 
   const {spotifyProfile } = useContext(AuthContext);
+  
   return (
     <View>
     <View style={{ alignItems: 'center'}}>
