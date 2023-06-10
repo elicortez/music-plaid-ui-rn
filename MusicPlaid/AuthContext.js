@@ -7,9 +7,10 @@ export const AuthProvider = ({ children }) => {
   const [spotifyProfile, setSpotifyProfile] = useState(null);
   const [appBackedInfo, setAppBackedInfo] = useState(null);
   const [topArtists, setTopArtists] = useState(null);
+  const [userData, setUserData] = useState(null);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, spotifyProfile, setSpotifyProfile, appBackedInfo, setAppBackedInfo, topArtists, setAppBackedInfo }}>
+    <AuthContext.Provider value={{ user, setUser, spotifyProfile, setSpotifyProfile, appBackedInfo, setAppBackedInfo, topArtists, setTopArtists, userData, setUserData}}>
       {children}
     </AuthContext.Provider>
   );

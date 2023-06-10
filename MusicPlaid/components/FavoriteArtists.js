@@ -1,23 +1,23 @@
 import { View, Text, ScrollView, Image, StyleSheet } from 'react-native'
-import React from 'react'
-import { ARTISTS } from '../data/artists'
+import React, {useContext} from 'react'
+import { AuthContext } from '../AuthContext';
 
 const FavoriteArtists = () => {
+  const {userData} = useContext(AuthContext);
+
   return (
     <View style={{marginBottom: 0}}>
         <View>
         <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold', marginBottom:10, marginLeft: 10}}>Favorite Artists</Text>
         </View>
 
-
     <ScrollView 
         horizontal 
         showsHorizontalScrollIndicator={false}
         >
-            {ARTISTS.map((story, index) => (
+            {userData.fav_artists.map((artist, index) => (
                 <View key={index} style={{alignItems: 'center', marginBottom:20}}>
-                    <Image source={{uri: story.image}} style={styles.story} />
-
+                    <Image source={{uri: artist.image_url}} style={styles.story} />
                 </View>
             ))}
     </ScrollView>

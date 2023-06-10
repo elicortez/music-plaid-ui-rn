@@ -1,9 +1,12 @@
 import { View, Text, ScrollView, Image, StyleSheet } from 'react-native'
-import React from 'react'
-import { TRACKS } from '../data/tracks'
+import React, {useContext} from 'react'
+import { AuthContext } from '../AuthContext';
+//import { TRACKS } from '../data/tracks'
 
 
 const LatestTracks = () => {
+    const {userData} = useContext(AuthContext);
+
     return (
         <View style={{marginBottom: 10}}>
             <View>
@@ -12,12 +15,14 @@ const LatestTracks = () => {
     
     
         <ScrollView 
-            horizontal 
+            vertical 
             showsHorizontalScrollIndicator={false}
             >
-                {TRACKS.map((story, index) => (
-                    <View key={index} style={{alignItems: 'center'}}>
-                        <Image source={{uri: story.image}} style={styles.story} />
+                {userData.recent_tracks.map((track, index) => (
+                    <View key={index} style={{alignItems: 'left'}}>
+                        <Text style={{color: 'white', fontSize: 15, marginLeft: 10}}>{track.track_name}</Text>
+                        <Text style={{color: 'gray', fontSize: 12, marginBottom:10, marginLeft: 10}}>{track.artist_name}</Text>
+                        {/* <Image source={{uri: track.img_url}} style={styles.story} /> */}
     
                     </View>
                 ))}

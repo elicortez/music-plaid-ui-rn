@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Image, StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native'
 import { Button } from "react-native-elements";
 import { AuthContext } from '../AuthContext';
@@ -13,9 +13,6 @@ let redirectUri;
 var currentURL = window.location.href;
 redirectUri = currentURL;
 console.log('Redirect URI: ', redirectUri);
-//redirectUri = 'https://musicwebapp-bdbe8.web.app/';
-//redirectUri = 'http://localhost:19006/';
-
 
 
 const discovery = {
@@ -25,8 +22,8 @@ const discovery = {
 
 const Login = ({ navigation }) => {
 
-  const { setUser, setSpotifyProfile, setAppBackedInfo, setTopArtists } = useContext(AuthContext);
-  
+  const { setUser, setSpotifyProfile, setAppBackedInfo, setTopArtists, setUserData } = useContext(AuthContext);
+
   let accessToken = null;
   let code = null;
   let access_token = null;
@@ -34,7 +31,7 @@ const Login = ({ navigation }) => {
   const [request, response, promptAsync] = useAuthRequest(
     {
       responseType: ResponseType.Token,
-      clientId: spotifyClientId,
+      clientId: spotifyClientId, //TODO: obtain these values (clientId, scopes, etc.) from server
       scopes: [
         "user-read-currently-playing",
         "user-read-recently-played",
@@ -53,6 +50,8 @@ const Login = ({ navigation }) => {
     discovery
   );
 
+  // Everything is done in a single chain once response is obtained, but we could be a bit smarter and parallelize spotify and user data, 
+  // But need to make sure both are complete before navigating to profile
   useEffect(() => {
     if (response?.type === "success") {
       access_token = response.params.access_token;
@@ -60,8 +59,21 @@ const Login = ({ navigation }) => {
       var data = JSON.stringify(response.params);
       console.log('Response Params', data)
       setUser(access_token);
-      
-          // Just testing calling server api using token in header
+
+      console.log('Access token: ', access_token);
+      axios("https://api.spotify.com/v1/me", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + access_token,
+        },
+      })
+        .then((response) => {
+          console.log('Spotify profile: ', response.data);
+          setSpotifyProfile(response.data);
+
+          // Now call server to obtain all of user data
           const userDataUrl = 'https://musicplaid.wm.r.appspot.com/user_data'
           axios(userDataUrl, {
             method: "GET",
@@ -75,50 +87,21 @@ const Login = ({ navigation }) => {
           })
             .then((response) => {
               console.log('User Data: ', response.data);
+              setUserData(response.data);
+
+              // Now finally, navigate to profile page
+              navigation.replace("Profile", {
+                token: accessToken,
+                other: "blaaaa",
+              });
             })
+          })
     }
   }, [response]);
 
-
-  useEffect(() => {
-
-    if (code)
-     {
-      console.log('Code', code);
-     }
-
-    if (access_token) {
-      console.log('Access token: ', access_token);
-      axios("https://api.spotify.com/v1/me", {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + access_token,
-        },
-      })
-        .then((response) => {
-          console.log('Spotify profile: ', response.data);
-          setSpotifyProfile(response.data);
-        })
-        .catch((error) => {
-          console.log("error", error.message);
-        });
-
-      setTimeout(
-        () =>
-          navigation.replace("Profile", {
-            token: accessToken,
-            other: "blaaaa",
-          }),
-        500
-      );
-    }
-  });
-
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
-    <Image style={{ width: 300, height: 100} } source={require('../assets/image1.png')} />
+      <Image style={{ width: 300, height: 100 }} source={require('../assets/image1.png')} />
       <Button
         title="Login with Spotify"
         icon={{
