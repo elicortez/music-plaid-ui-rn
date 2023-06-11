@@ -10,10 +10,35 @@ import ProfilePicure from '../components/ProfilePicure';
 import ProfileFollows from '../components/ProfileFollows';
 import FavoriteArtists from '../components/FavoriteArtists';
 import LatestTracks from '../components/LatestTracks';
+import { UserContext, UserProvider } from '../UserContext';
 import { AuthContext } from '../AuthContext';
+import axios from 'axios';
 
-const Profile = ( {navigation} ) => {
-  const { spotifyProfile } = useContext(AuthContext);
+
+const Profile = ( {navigation, route} ) => {
+  //const { setUserData } = useContext(UserContext);
+  const { userData, setUserData } = useContext(AuthContext);
+
+  React.useEffect(() => {
+    console.log('Profile route params', route.params)
+    if (route.params.id) {
+      console.log('fetching another user', route.params.id)
+      // if an id is provided, we'll fetch the user data from the server
+      axios(`http://127.0.0.1:8080/user_data?id=${route.params.id}`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log('User Data: ', response.data);
+        setUserData(response.data); // todo: this should set the user in a different context (UserContext) instead of AuthContext, to avoid confusion and differentiate
+      })
+} else {
+      setUserData(userData) // sets the user data from the authentication context
+    }
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -26,7 +51,6 @@ const Profile = ( {navigation} ) => {
     </SafeAreaView>
   )
 }
-
 
 const styles = StyleSheet.create({
   container: {

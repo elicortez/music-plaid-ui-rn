@@ -4,7 +4,7 @@ import { AuthContext } from '../AuthContext';
 import { Icon } from 'react-native-elements';
 
 const ProfilePicure = () => {
-  const { spotifyProfile, userData } = useContext(AuthContext);
+  const { userData } = useContext(AuthContext);
 
   return (
     <View>

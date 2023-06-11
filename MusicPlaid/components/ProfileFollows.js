@@ -8,12 +8,11 @@ const ProfilePicure = ({ navigation }) => {
   const { userData } = useContext(AuthContext);
 
   const handleFollowingTap = () => {
-    console.log('following tapped');
     navigation.navigate('PeopleList', { title: 'Following', people: userData.following })
   };
 
   const handleFollowersTap = () => {
-    console.log('followers tapped')
+    navigation.navigate('PeopleList', { title: 'Followers', people: userData.followers })
   };
 
   return (
