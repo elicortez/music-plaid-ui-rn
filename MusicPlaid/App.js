@@ -5,6 +5,7 @@ import { AuthContext, AuthProvider } from './AuthContext';
 import Login from './screens/Login';
 import Profile from './screens/Profile';
 import Feed from './screens/Feed';
+import PeopleList from './screens/PeopleList';
 
 const screenOption = {
   headerShown: false,
@@ -32,6 +33,7 @@ const App = () => {
           <Stack.Screen name="Login" component={Login} options={{ title: 'MusicPlaid' }}/>
           <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} />
           <Stack.Screen name="Feed" component={Feed} options={{ title: 'Discovery' }}/>
+          <Stack.Screen name="PeopleList" component={PeopleList} options={{ title: 'People' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

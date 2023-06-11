@@ -14,6 +14,10 @@ var currentURL = window.location.href;
 redirectUri = currentURL;
 console.log('Redirect URI: ', redirectUri);
 
+const userDataUrl = 'https://musicplaid.wm.r.appspot.com/user_data'
+//const userDataUrl = 'http://127.0.0.1:8080/user_data'
+console.log('userDataUrl: ', userDataUrl)
+
 
 const discovery = {
   authorizationEndpoint: "https://accounts.spotify.com/authorize",
@@ -74,7 +78,6 @@ const Login = ({ navigation }) => {
           setSpotifyProfile(response.data);
 
           // Now call server to obtain all of user data
-          const userDataUrl = 'https://musicplaid.wm.r.appspot.com/user_data'
           axios(userDataUrl, {
             method: "GET",
             headers: {

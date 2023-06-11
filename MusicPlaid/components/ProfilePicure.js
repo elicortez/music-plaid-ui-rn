@@ -20,18 +20,6 @@ const ProfilePicure = () => {
           <Text style={{ color: 'white', fontSize: 18, marginTop: 1 }}> {userData.user.display_name}</Text>
         </View>
       </View>
-      <View style={{ marginTop: 40, marginBottom: 40, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around' }}>
-        <View style={{ alignItems: 'center' }}>
-          <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold' }}>{userData.friends.length}</Text>
-          <Text style={{ color: 'white', fontSize: 15, fontWeight: 'bold' }}>Followers</Text>
-        </View>
-        <View style={{ alignItems: 'center' }}>
-          <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold' }}>{userData.friends.length}</Text>
-          <Text style={{ color: 'white', fontSize: 15, fontWeight: 'bold' }}>Following</Text>
-        </View>
-
-      </View>
-
     </View>
   )
 }

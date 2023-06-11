@@ -7,17 +7,19 @@ import Header from '../components/Header'
 
 import Footer from '../components/Footer';
 import ProfilePicure from '../components/ProfilePicure';
+import ProfileFollows from '../components/ProfileFollows';
 import FavoriteArtists from '../components/FavoriteArtists';
 import LatestTracks from '../components/LatestTracks';
 import { AuthContext } from '../AuthContext';
 
-const Profile = () => {
+const Profile = ( {navigation} ) => {
   const { spotifyProfile } = useContext(AuthContext);
 
   return (
     <SafeAreaView style={styles.container}>
         <Header/>
         <ProfilePicure/>
+        <ProfileFollows navigation={navigation}/>
         <FavoriteArtists/>
         <LatestTracks  />
         <Footer /> 
