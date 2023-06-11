@@ -6,6 +6,7 @@ import * as AuthSession from 'expo-auth-session';
 import { ResponseType, useAuthRequest } from "expo-auth-session";
 import axios from 'axios';
 import * as WebBrowser from 'expo-web-browser';
+import Config from '../Config.js';
 WebBrowser.maybeCompleteAuthSession();
 
 const spotifyClientId = 'f99460ad37214fb4974e49ff36421725';
@@ -14,10 +15,7 @@ var currentURL = window.location.href;
 redirectUri = currentURL;
 console.log('Redirect URI: ', redirectUri);
 
-const userDataUrl = 'https://musicplaid.wm.r.appspot.com/user_data'
-//const userDataUrl = 'http://127.0.0.1:8080/user_data'
-console.log('userDataUrl: ', userDataUrl)
-
+const userDataUrl = Config.userDataUrl;
 
 const discovery = {
   authorizationEndpoint: "https://accounts.spotify.com/authorize",

@@ -13,6 +13,7 @@ import LatestTracks from '../components/LatestTracks';
 import { UserContext, UserProvider } from '../UserContext';
 import { AuthContext } from '../AuthContext';
 import axios from 'axios';
+import Config from '../Config.js';
 
 
 const Profile = ( {navigation, route} ) => {
@@ -24,7 +25,7 @@ const Profile = ( {navigation, route} ) => {
     if (route.params.id) {
       console.log('fetching another user', route.params.id)
       // if an id is provided, we'll fetch the user data from the server
-      axios(`http://127.0.0.1:8080/user_data?id=${route.params.id}`, {
+      axios(`${Config.userDataUrl}?id=${route.params.id}`, {
         method: "GET",
         headers: {
           Accept: "application/json",
