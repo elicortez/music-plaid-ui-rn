@@ -6,6 +6,7 @@ import Login from './screens/Login';
 import Profile from './screens/Profile';
 import Feed from './screens/Feed';
 import PeopleList from './screens/PeopleList';
+import Music from './screens/Music';
 
 const screenOption = {
   headerShown: false,
@@ -34,6 +35,7 @@ const App = () => {
           <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} />
           <Stack.Screen name="Feed" component={Feed} options={{ title: 'Discovery' }}/>
           <Stack.Screen name="PeopleList" component={PeopleList} options={{ title: 'People' }} />
+          <Stack.Screen name="Music" component={Music} options={{ title: 'Song' }} initialParams={{ id: 202 }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
