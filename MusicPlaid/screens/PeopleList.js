@@ -5,6 +5,8 @@ import {
 } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native'
 import Header from '../components/Header'
+import { globalStyles } from '../styles/global';
+
 
 
 const PeopleList = ({ navigation, route }) => {
@@ -15,8 +17,7 @@ const PeopleList = ({ navigation, route }) => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Header />
+    <SafeAreaView style={globalStyles.container}>
       <View style={{ alignItems: 'center' }}>
         <Text style={{ color: 'white', fontSize: 20, marginTop: 10, fontWeight: 'bold' }}>{route.params.title}</Text>
       </View>

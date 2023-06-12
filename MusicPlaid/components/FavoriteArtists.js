@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, Image, StyleSheet } from 'react-native'
 import React, {useContext} from 'react'
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
 
 const FavoriteArtists = () => {
   const {userData} = useContext(AuthContext);

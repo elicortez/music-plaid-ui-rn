@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { Image, StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native'
 import { Button } from "react-native-elements";
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
 import * as AuthSession from 'expo-auth-session';
 import { ResponseType, useAuthRequest } from "expo-auth-session";
 import axios from 'axios';

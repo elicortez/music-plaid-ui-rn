@@ -7,7 +7,7 @@ import Header from '../components/Header'
 import Post from '../components/Post'
 import { POSTS } from '../data/posts';
 import Footer from '../components/Footer';
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
 
 const Feed = () => {
   const { user, spotifyProfile } = useContext(AuthContext);

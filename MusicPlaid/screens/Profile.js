@@ -10,10 +10,11 @@ import ProfilePicure from '../components/ProfilePicure';
 import ProfileFollows from '../components/ProfileFollows';
 import FavoriteArtists from '../components/FavoriteArtists';
 import LatestTracks from '../components/LatestTracks';
-import { UserContext, UserProvider } from '../UserContext';
-import { AuthContext } from '../AuthContext';
+import { UserContext, UserProvider } from '../contexts/UserContext';
+import { AuthContext } from '../contexts/AuthContext';
 import axios from 'axios';
 import Config from '../Config.js';
+import { globalStyles } from '../styles/global';
 
 
 const Profile = ( {navigation, route} ) => {
@@ -42,8 +43,7 @@ const Profile = ( {navigation, route} ) => {
   }, [])
 
   return (
-    <SafeAreaView style={styles.container}>
-        <Header/>
+    <SafeAreaView style={globalStyles.container}>
         <ProfilePicure/>
         <ProfileFollows navigation={navigation}/>
         <FavoriteArtists/>
@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
   container: {
       backgroundColor: 'black',
       flex: 1,
+      paddingTop: 40,
   },
 })
 

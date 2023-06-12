@@ -1,7 +1,7 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useContext } from 'react'
 import { useNavigation } from '@react-navigation/native';
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
 
 const Header = () => {
     const navigation = useNavigation();

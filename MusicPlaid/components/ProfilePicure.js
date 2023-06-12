@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 import React, { useContext } from 'react'
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
 import { Icon } from 'react-native-elements';
 
 const ProfilePicure = () => {

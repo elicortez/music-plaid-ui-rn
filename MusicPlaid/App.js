@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { AuthContext, AuthProvider } from './AuthContext';
+import { AuthContext, AuthProvider } from './contexts/AuthContext';
 import Login from './screens/Login';
 import Profile from './screens/Profile';
 import Feed from './screens/Feed';
@@ -9,7 +9,9 @@ import PeopleList from './screens/PeopleList';
 import Music from './screens/Music';
 
 const screenOption = {
-  headerShown: false,
+  //headerShown: false,
+  headerStyle: { backgroundColor: 'black' },
+  headerTintColor: 'white',
 }
 
 const Stack = createStackNavigator();
@@ -31,7 +33,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={screenOption}>
-          <Stack.Screen name="Login" component={Login} options={{ title: 'MusicPlaid' }}/>
+          <Stack.Screen name="Login" component={Login} options={{ title: 'Login' }}/>
           <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} />
           <Stack.Screen name="Feed" component={Feed} options={{ title: 'Discovery' }}/>
           <Stack.Screen name="PeopleList" component={PeopleList} options={{ title: 'People' }} />
