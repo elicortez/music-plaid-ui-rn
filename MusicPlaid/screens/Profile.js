@@ -1,10 +1,9 @@
-import { StyleSheet } from 'react-native'
+import { Text, StyleSheet } from 'react-native'
 import {
     SafeAreaView,
   } from 'react-native-safe-area-context';
-import React, {useContext} from 'react'
+import {useEffect, useContext, useState} from 'react'
 import Header from '../components/Header'
-
 import Footer from '../components/Footer';
 import ProfilePicure from '../components/ProfilePicure';
 import ProfileFollows from '../components/ProfileFollows';
@@ -19,9 +18,10 @@ import { globalStyles } from '../styles/global';
 
 const Profile = ( {navigation, route} ) => {
   //const { setUserData } = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
   const { userData, setUserData } = useContext(AuthContext);
 
-  React.useEffect(() => {
+  useEffect(() => {
     console.log('Profile route params', route.params)
     if (route.params.id) {
       console.log('fetching another user', route.params.id)
@@ -36,11 +36,17 @@ const Profile = ( {navigation, route} ) => {
       .then((response) => {
         console.log('User Data: ', response.data);
         setUserData(response.data); // todo: this should set the user in a different context (UserContext) instead of AuthContext, to avoid confusion and differentiate
-      })
+        setLoading(false);
+      }).catch((error) => { console.log(error)  }) // todo: do something when error is found, i.e., render an error screen
 } else {
-      setUserData(userData) // sets the user data from the authentication context
+      setUserData(userData); // sets the user data from the authentication context
+      setLoading(false);
     }
   }, [])
+
+  if (loading) {
+    return (<SafeAreaView style={globalStyles.container}><Text style={styles.text}>Loading...</Text></SafeAreaView>);
+  }
 
   return (
     <SafeAreaView style={globalStyles.container}>
@@ -59,6 +65,9 @@ const styles = StyleSheet.create({
       flex: 1,
       paddingTop: 40,
   },
+  text: {
+      color: 'white',
+  }
 })
 
 export default Profile
