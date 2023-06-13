@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useContext } from 'react'
-import { AuthContext } from '../contexts/AuthContext';
+import { UserContext } from '../contexts/UserContext';
 import { NavigationContainer } from '@react-navigation/native';
 
 
 const ProfilePicure = ({ navigation }) => {
-  const { userData } = useContext(AuthContext);
+  const { userData } = useContext(UserContext);
 
   const handleFollowingTap = () => {
     navigation.navigate('PeopleList', { title: 'Following', people: userData.following })
@@ -16,20 +16,20 @@ const ProfilePicure = ({ navigation }) => {
   };
 
   return (
-      <View style={{ marginTop: 40, marginBottom: 40, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around' }}>
-        <TouchableOpacity onPress={handleFollowersTap}>
-          <View style={{ alignItems: 'center' }}>
-            <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold' }}>{userData.followers.length}</Text>
-            <Text style={{ color: 'white', fontSize: 15, fontWeight: 'bold' }}>Followers</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleFollowingTap}>
-          <View style={{ alignItems: 'center' }}>
-            <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold' }}>{userData.following.length}</Text>
-            <Text style={{ color: 'white', fontSize: 15, fontWeight: 'bold' }}>Following</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+    <View style={{ marginTop: 40, marginBottom: 40, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around' }}>
+      <TouchableOpacity onPress={handleFollowersTap}>
+        <View style={{ alignItems: 'center' }}>
+          <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold' }}>{userData.followers.length}</Text>
+          <Text style={{ color: 'white', fontSize: 15, fontWeight: 'bold' }}>Followers</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={handleFollowingTap}>
+        <View style={{ alignItems: 'center' }}>
+          <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold' }}>{userData.following.length}</Text>
+          <Text style={{ color: 'white', fontSize: 15, fontWeight: 'bold' }}>Following</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
   )
 }
 

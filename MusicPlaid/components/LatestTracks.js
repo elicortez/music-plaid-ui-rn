@@ -1,17 +1,17 @@
 import { View, Text, ScrollView, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
 import React, { useContext } from 'react'
-import { AuthContext } from '../contexts/AuthContext';
+import { UserContext } from '../contexts/UserContext';
 
 
-const LatestTracks = ({navigation}) => {
-    const { userData } = useContext(AuthContext);
+const LatestTracks = ({ navigation }) => {
+    const { userData } = useContext(UserContext);
 
     //todo: use flatlist instead
     const renderItem = (track, index) => {
         return (
-            <TouchableOpacity key={index} onPress={() => { 
+            <TouchableOpacity key={index} onPress={() => {
                 navigation.navigate('Music', { title: 'Song', id: track.id })
-                }}>
+            }}>
                 <View style={{ alignItems: 'flex-start' }}>
                     <Text style={{ color: 'white', fontSize: 15, marginLeft: 10 }}>{track.track_name}</Text>
                     <Text style={{ color: 'gray', fontSize: 12, marginBottom: 10, marginLeft: 10 }}>{track.artist_name}</Text>

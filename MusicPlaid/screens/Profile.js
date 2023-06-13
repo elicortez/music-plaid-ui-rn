@@ -1,8 +1,8 @@
 import { Text, StyleSheet } from 'react-native'
 import {
-    SafeAreaView,
-  } from 'react-native-safe-area-context';
-import React, {useEffect, useContext, useState} from 'react'
+  SafeAreaView,
+} from 'react-native-safe-area-context';
+import React, { useEffect, useContext, useState } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer';
 import ProfilePicure from '../components/ProfilePicure';
@@ -16,10 +16,11 @@ import Config from '../Config.js';
 import { globalStyles } from '../styles/global';
 
 
-const Profile = ( {navigation, route} ) => {
+const Profile = ({ navigation, route }) => {
   //const { setUserData } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
-  const { userData, setUserData } = useContext(AuthContext);
+  const { userData: authUserData, setUserData: setAuthUserData } = useContext(AuthContext);
+  const { setUserData } = useContext(UserContext);
 
   useEffect(() => {
     console.log('Profile route params', route.params)
@@ -33,13 +34,13 @@ const Profile = ( {navigation, route} ) => {
           "Content-Type": "application/json",
         },
       })
-      .then((response) => {
-        console.log('User Data: ', response.data);
-        setUserData(response.data); // todo: this should set the user in a different context (UserContext) instead of AuthContext, to avoid confusion and differentiate
-        setLoading(false);
-      }).catch((error) => { console.log(error)  }) // todo: do something when error is found, i.e., render an error screen
-} else {
-      setUserData(userData); // sets the user data from the authentication context
+        .then((response) => {
+          console.log('User Data: ', response.data);
+          setUserData(response.data); // todo: this should set the user in a different context (UserContext) instead of AuthContext, to avoid confusion and differentiate
+          setLoading(false);
+        }).catch((error) => { console.log(error) }) // todo: do something when error is found, i.e., render an error screen
+    } else {
+      setUserData(authUserData); // sets the user data from the authentication context
       setLoading(false);
     }
   }, [])
@@ -49,24 +50,26 @@ const Profile = ( {navigation, route} ) => {
   }
 
   return (
-    <SafeAreaView style={globalStyles.container}>
-        <ProfilePicure/>
-        <ProfileFollows navigation={navigation}/>
-        <FavoriteArtists/>
+    <UserProvider>
+      <SafeAreaView style={globalStyles.container}>
+        <ProfilePicure />
+        <ProfileFollows navigation={navigation} />
+        <FavoriteArtists />
         <LatestTracks navigation={navigation} />
-        <Footer /> 
-    </SafeAreaView>
+        <Footer />
+      </SafeAreaView>
+    </UserProvider>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-      backgroundColor: 'black',
-      flex: 1,
-      paddingTop: 40,
+    backgroundColor: 'black',
+    flex: 1,
+    paddingTop: 40,
   },
   text: {
-      color: 'white',
+    color: 'white',
   }
 })
 

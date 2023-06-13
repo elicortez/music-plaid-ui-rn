@@ -7,6 +7,7 @@ import Profile from './screens/Profile';
 import Feed from './screens/Feed';
 import PeopleList from './screens/PeopleList';
 import Music from './screens/Music';
+import { UserProvider } from './contexts/UserContext';
 
 const screenOption = {
   //headerShown: false,
@@ -45,6 +46,8 @@ const App = () => {
 
 export default () => (
   <AuthProvider>
-    <App />
+    <UserProvider>
+      <App />
+    </UserProvider>
   </AuthProvider>
 );
