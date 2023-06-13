@@ -96,7 +96,7 @@ const Login = ({ navigation }) => {
                 other: "blaaaa",
               });
             })
-          })
+        })
     }
   }, [response]);
 
