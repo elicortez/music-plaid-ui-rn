@@ -53,7 +53,7 @@ const Profile = ( {navigation, route} ) => {
         <ProfilePicure/>
         <ProfileFollows navigation={navigation}/>
         <FavoriteArtists/>
-        <LatestTracks  />
+        <LatestTracks navigation={navigation} />
         <Footer /> 
     </SafeAreaView>
   )

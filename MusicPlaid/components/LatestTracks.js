@@ -1,19 +1,23 @@
-import { View, Text, ScrollView, Image, StyleSheet, FlatList } from 'react-native'
+import { View, Text, ScrollView, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
 import React, { useContext } from 'react'
 import { AuthContext } from '../contexts/AuthContext';
 
 
-const LatestTracks = () => {
+const LatestTracks = ({navigation}) => {
     const { userData } = useContext(AuthContext);
 
     //todo: use flatlist instead
-    const renderItem = ({ track }) => {
+    const renderItem = (track, index) => {
         return (
-        <View key={track.id}  style={{ alignItems: 'flex-start' }}>
-            <Text style={{ color: 'white', fontSize: 15, marginLeft: 10 }}>{track.track_name}</Text>
-            <Text style={{ color: 'gray', fontSize: 12, marginBottom: 10, marginLeft: 10 }}>{track.artist_name}</Text>
-            <Image source={{ uri: track.img_url }} style={styles.story} />
-        </View>);
+            <TouchableOpacity key={index} onPress={() => { 
+                navigation.navigate('Music', { title: 'Song', id: track.id })
+                }}>
+                <View style={{ alignItems: 'flex-start' }}>
+                    <Text style={{ color: 'white', fontSize: 15, marginLeft: 10 }}>{track.track_name}</Text>
+                    <Text style={{ color: 'gray', fontSize: 12, marginBottom: 10, marginLeft: 10 }}>{track.artist_name}</Text>
+                    <Image source={{ uri: track.img_url }} style={styles.story} />
+                </View>
+            </TouchableOpacity>);
     };
 
     return (
@@ -22,18 +26,12 @@ const LatestTracks = () => {
                 <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', marginBottom: 10, marginLeft: 10 }}>Latest Tracks</Text>
             </View>
 
-            {/* <FlatList data={userData.recent_tracks} renderItem={renderItem} horizontal={false} showsHorizontalScrollIndicator={false} keyExtractor={(track) => track.id} /> */}
-            <ScrollView 
-            showsHorizontalScrollIndicator={false}
+            {/* <FlatList data={userData.recent_tracks} renderItem={renderItem} horizontal={false} showsHorizontalScrollIndicator={false} keyExtractor={(item, index) => index.toString()} /> */}
+            <ScrollView
+                showsHorizontalScrollIndicator={false}
             >
-                {userData.recent_tracks.map((track, index) => (
-                    <View key={index} style={{alignItems: 'flex-start'}}>
-                        <Text style={{color: 'white', fontSize: 15, marginLeft: 10}}>{track.track_name}</Text>
-                        <Text style={{color: 'gray', fontSize: 12, marginBottom:10, marginLeft: 10}}>{track.artist_name}</Text>
-                        <Image source={{uri: track.img_url}} style={styles.story} />
-                    </View>
-                ))}
-        </ScrollView>
+                {userData.recent_tracks.map(renderItem)}
+            </ScrollView>
         </View>
     )
 }

@@ -17,7 +17,15 @@ const Music = ({ navigation, route }) => {
   React.useEffect(() => {
     console.log('Song route id', route.params.id)
     const songId = route.params.id;
-    axios(`${Config.songDataUrl}?id=${songId}`)
+    axios(`${Config.songDataUrl}?id=${songId}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+
+    }
+    )
       .then((response) => {
         console.log('Song Data: ', response.data);
         setSongData(response.data);
