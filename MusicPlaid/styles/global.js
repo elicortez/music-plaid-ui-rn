@@ -8,5 +8,16 @@ export const globalStyles = StyleSheet.create({
     },
     text: {
         color: 'white',
-    }
+    },
+    headerText: {
+        color: 'white',
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    subHeaderText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+
 });

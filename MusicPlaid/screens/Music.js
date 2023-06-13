@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, FlatList } from 'react-native'
 import React from 'react'
 import axios from 'axios';
 import Config from '../Config.js';
@@ -14,15 +14,19 @@ const Music = ({ navigation, route }) => {
 
   console.log('Song route params', route)
 
+  const renderListeners = ({ item }) => {
+    return (<Text style={globalStyles.text}>{item.display_name}</Text>)
+  }
+
   React.useEffect(() => {
     console.log('Song route id', route.params.id)
     const songId = route.params.id;
     axios(`${Config.songDataUrl}?id=${songId}`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
 
     }
     )
@@ -40,25 +44,27 @@ const Music = ({ navigation, route }) => {
         </View>
       </SafeAreaView>
     )
-  } else {
-    return (
-      <SafeAreaView style={globalStyles.container}>
-        <Header />
+  };
 
-        <View style={{ alignItems: 'center' }}>
+  return (
+    <SafeAreaView style={globalStyles.container}>
+      <View style={{ alignItems: 'center' }}>
 
         <Image source={songData.song.img_url} style={styles.story} />
-          <Text style={styles.textSongName}>{songData.song.name}</Text>
-          <Text style={styles.textArtist}>{songData.artists[0].name}</Text>
+        <Text style={styles.textSongName}>{songData.song.name}</Text>
+        <Text style={styles.textArtist}>{songData.artists[0].name}</Text>
+      </View>
 
-          {/* <Text style={styles.text}>Likes</Text>
-          <Text style={styles.text}>Listens</Text>
+      <View style={{ alignItems: 'flex-start', marginTop: 20, marginLeft: 10 }}>
+        <Text style={globalStyles.subHeaderText}>Listeners</Text>
+        <FlatList style={{ marginTop: 5, marginLeft: 5 }} data={songData.listeners} renderItem={renderListeners} keyExtractor={(item, index) => index.toString()} />
+      </View>
+
+      {/* <Text style={styles.text}>Likes</Text>
           <Text style={styles.text}>Comments</Text> */}
 
-        </View>
-      </SafeAreaView>
-    )
-  }
+    </SafeAreaView >
+  )
 }
 
 const styles = StyleSheet.create({
