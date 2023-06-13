@@ -6,6 +6,8 @@ import {
   SafeAreaView,
 } from 'react-native-safe-area-context';
 import Header from '../components/Header'
+import { globalStyles } from '../styles/global';
+
 
 const Music = ({ navigation, route }) => {
   const [songData, setSongData] = React.useState(null);
@@ -24,15 +26,15 @@ const Music = ({ navigation, route }) => {
 
   if (songData == null) {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={globalStyles.container}>
         <View>
-          <Text>Loading Song...</Text>
+          <Text style={globalStyles.text}>Loading Song...</Text>
         </View>
       </SafeAreaView>
     )
   } else {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={globalStyles.container}>
         <Header />
 
         <View style={{ alignItems: 'center' }}>

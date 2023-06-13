@@ -21,10 +21,10 @@ const PeopleList = ({ navigation, route }) => {
       <View style={{ alignItems: 'center' }}>
         <Text style={{ color: 'white', fontSize: 20, marginTop: 10, fontWeight: 'bold' }}>{route.params.title}</Text>
       </View>
-      <View style={{ alignItems: 'left' }}>
+      <View style={{ alignItems: 'flex-start' }}>
         {route.params.people.map((person, index) => (
            <TouchableOpacity key={index} onPress={() => handlePersonPressed(person.id)}>
-            <View  style={{ alignItems: 'left' }}>
+            <View  style={{ alignItems: 'flex-start' }}>
               <Text style={{ color: 'white', fontSize: 15 }}>{person.display_name}</Text>
             </View>
           </TouchableOpacity>

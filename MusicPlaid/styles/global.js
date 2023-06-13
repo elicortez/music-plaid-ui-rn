@@ -6,4 +6,7 @@ export const globalStyles = StyleSheet.create({
         backgroundColor: 'black',
         paddingTop: 40,
     },
+    text: {
+        color: 'white',
+    }
 });
