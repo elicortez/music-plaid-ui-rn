@@ -9,14 +9,17 @@ const LatestTracks = ({ navigation, userData }) => {
 
     //todo: use flatlist instead
     const renderItem = (track, index) => {
+        console.log('rendering track', track);
         return (
             <TouchableOpacity key={index} onPress={() => {
                 navigation.navigate('Music', { title: 'Song', id: track.id })
             }}>
-                <View style={{ alignItems: 'flex-start' }}>
-                    <Text style={{ color: 'white', fontSize: 15, marginLeft: 10 }}>{track.track_name}</Text>
-                    <Text style={{ color: 'gray', fontSize: 12, marginBottom: 10, marginLeft: 10 }}>{track.artist_name}</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 10 }}>
                     <Image source={{ uri: track.img_url }} style={styles.story} />
+                    <View style={{ alignItems: 'flex-start' }}>
+                        <Text style={{ color: 'white', fontSize: 15, marginLeft: 10 }}>{track.track_name}</Text>
+                        <Text style={{ color: 'gray', fontSize: 12, marginBottom: 10, marginLeft: 10 }}>{track.artist_name}</Text>
+                    </View>
                 </View>
             </TouchableOpacity>);
     };
@@ -39,8 +42,8 @@ const LatestTracks = ({ navigation, userData }) => {
 
 const styles = StyleSheet.create({
     story: {
-        width: 20,
-        height: 20,
+        width: 40,
+        height: 40,
     },
 })
 
