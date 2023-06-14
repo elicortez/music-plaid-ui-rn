@@ -34,10 +34,10 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={screenOption}>
         <Stack.Screen name="Login" component={Login} options={{ title: 'Login' }} />
-        <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} initialParams={{ id: 19 }} />
+        <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} />
         <Stack.Screen name="Feed" component={Feed} options={{ title: 'Discovery' }} />
         <Stack.Screen name="PeopleList" component={PeopleList} options={{ title: 'People' }} />
-        <Stack.Screen name="Music" component={Music} options={{ title: 'Song' }} initialParams={{ id: 202 }} />
+        <Stack.Screen name="Music" component={Music} options={{ title: 'Song' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
