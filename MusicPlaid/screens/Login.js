@@ -7,6 +7,7 @@ import { ResponseType, useAuthRequest } from "expo-auth-session";
 import axios from 'axios';
 import * as WebBrowser from 'expo-web-browser';
 import Config from '../Config.js';
+
 WebBrowser.maybeCompleteAuthSession();
 
 const spotifyClientId = 'f99460ad37214fb4974e49ff36421725';
@@ -27,7 +28,6 @@ const Login = ({ navigation }) => {
   const { setUser, setSpotifyProfile, setAppBackedInfo, setTopArtists, setUserData } = useContext(AuthContext);
 
   let accessToken = null;
-  let code = null;
   let access_token = null;
 
   const [request, response, promptAsync] = useAuthRequest(
@@ -52,51 +52,65 @@ const Login = ({ navigation }) => {
     discovery
   );
 
+  const fetchUserData = async (token) => {
+    try {
+      const spotifyProfileResponse = await axios("https://api.spotify.com/v1/me", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      });
+
+      console.log('Spotify profile: ', spotifyProfileResponse.data);
+      setSpotifyProfile(spotifyProfileResponse.data);
+
+      const userDataResponse = await axios(userDataUrl, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "spotify-token": token,
+          Authorization: "Bearer " + token,
+        },
+      });
+
+      console.log('User Data: ', userDataResponse.data);
+      setUserData(userDataResponse.data);
+
+      navigation.replace("Profile", {
+        token: token,
+        other: "blaaaa",
+      });
+    } catch (error) {
+      console.log("An error occurred while fetching user data:", error);
+    }
+  };
+
+  useEffect(() => {
+    const storedAccessToken = localStorage.getItem('userToken');
+    if (storedAccessToken) {
+      // User already logged in
+      setUser(storedAccessToken);
+      console.log('Stored access token: ', storedAccessToken);
+      fetchUserData(storedAccessToken);
+      // Call your APIs using this token or navigate to home
+    }
+  }, []);
+
   // Everything is done in a single chain once response is obtained, but we could be a bit smarter and parallelize spotify and user data, 
   // But need to make sure both are complete before navigating to profile
   useEffect(() => {
     if (response?.type === "success") {
       access_token = response.params.access_token;
-      code = response.params.code;
       var data = JSON.stringify(response.params);
       console.log('Response Params', data)
       setUser(access_token);
 
+      localStorage.setItem('userToken', access_token);
       console.log('Access token: ', access_token);
-      axios("https://api.spotify.com/v1/me", {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + access_token,
-        },
-      })
-        .then((response) => {
-          console.log('Spotify profile: ', response.data);
-          setSpotifyProfile(response.data);
-
-          // Now call server to obtain all of user data
-          axios(userDataUrl, {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              // "spotify-token": data,
-              "spotify-token": access_token,
-              Authorization: "Bearer " + accessToken,
-            },
-          })
-            .then((response) => {
-              console.log('User Data: ', response.data);
-              setUserData(response.data);
-
-              // Now finally, navigate to profile page
-              navigation.replace("Profile", {
-                token: accessToken,
-                other: "blaaaa",
-              });
-            })
-        })
+      fetchUserData(access_token);
     }
   }, [response]);
 
