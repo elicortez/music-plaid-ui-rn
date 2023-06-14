@@ -22,7 +22,8 @@ const Profile = ({ navigation, route }) => {
 
   useEffect(() => {
     console.log('Profile route params', route.params)
-    if (route.params.id) {
+    
+    if (route.params && route.params.id) {
       console.log('fetching another user', route.params.id)
       // if an id is provided, we'll fetch the user data from the server
       axios(`${Config.userDataUrl}?id=${route.params.id}`, {
