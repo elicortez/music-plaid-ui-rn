@@ -43,6 +43,7 @@ const Login = ({ navigation }) => {
         "streaming",
         "user-read-email",
         "user-read-private",
+        "user-library-read",
       ],
       // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
       // this must be set to false
