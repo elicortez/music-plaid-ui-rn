@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import {
   SafeAreaView,
@@ -23,9 +23,10 @@ const PeopleList = ({ navigation, route }) => {
       </View>
       <View style={{ alignItems: 'flex-start' }}>
         {route.params.people.map((person, index) => (
-           <TouchableOpacity key={index} onPress={() => handlePersonPressed(person.id)}>
-            <View  style={{ alignItems: 'flex-start' }}>
-              <Text style={{ color: 'white', fontSize: 15 }}>{person.display_name}</Text>
+          <TouchableOpacity key={index} onPress={() => handlePersonPressed(person.id)}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', margin: 10 }}>
+              <Image source={{ uri: person.img_url }} style={styles.imageThumbnail} />
+              <Text style={{ color: 'white', fontSize: 15, marginLeft: 10 }}>{person.display_name}</Text>
             </View>
           </TouchableOpacity>
         ))}
@@ -38,6 +39,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'black',
     flex: 1,
+  },
+  imageThumbnail: {
+    width: 40,
+    height: 40,
   },
 })
 
