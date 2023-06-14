@@ -19,7 +19,6 @@ const PeopleListScreen = ({ navigation, route }) => {
       </View>
       <PeopleList people={route.params.people} navigation={navigation} />
       <Footer />
-
     </SafeAreaView>
   )
 }

@@ -5,7 +5,7 @@ import { AuthContext, AuthProvider } from './contexts/AuthContext';
 import Login from './screens/Login';
 import Profile from './screens/Profile';
 import Feed from './screens/Feed';
-import PeopleList from './screens/PeopleList';
+import PeopleList from './screens/PeopleListScreen';
 import Music from './screens/Music';
 
 const screenOption = {
