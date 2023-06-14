@@ -7,6 +7,7 @@ import {
 } from 'react-native-safe-area-context';
 import Header from '../components/Header'
 import { globalStyles } from '../styles/global';
+import Footer from '../components/Footer.js';
 
 
 const Music = ({ navigation, route }) => {
@@ -62,7 +63,7 @@ const Music = ({ navigation, route }) => {
 
       {/* <Text style={styles.text}>Likes</Text>
           <Text style={styles.text}>Comments</Text> */}
-
+    <Footer/>
     </SafeAreaView >
   )
 }

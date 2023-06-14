@@ -6,6 +6,7 @@ import {
 import { StyleSheet } from 'react-native'
 import Header from '../components/Header'
 import { globalStyles } from '../styles/global';
+import Footer from '../components/Footer';
 
 
 
@@ -31,6 +32,7 @@ const PeopleList = ({ navigation, route }) => {
           </TouchableOpacity>
         ))}
       </View>
+      <Footer/>
     </SafeAreaView>
   )
 }
