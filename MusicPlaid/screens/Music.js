@@ -64,7 +64,7 @@ const Music = ({ navigation, route }) => {
         </View>
 
         {/* <Text style={styles.text}>Likes</Text>
-            <Text style={styles.text}>Comments</Text> */}``
+            <Text style={styles.text}>Comments</Text> */}
         </View>
       <Footer />
     </SafeAreaView >
