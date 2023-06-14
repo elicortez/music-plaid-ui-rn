@@ -18,6 +18,8 @@ const PeopleListScreen = ({ navigation, route }) => {
         <Text style={{ color: 'white', fontSize: 20, marginTop: 10, fontWeight: 'bold' }}>{route.params.title}</Text>
       </View>
       <PeopleList people={route.params.people} navigation={navigation} />
+      <Footer />
+
     </SafeAreaView>
   )
 }
