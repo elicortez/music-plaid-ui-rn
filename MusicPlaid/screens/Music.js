@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, FlatList } from 'react-native'
+import { View, Text, StyleSheet, Image, FlatList, Linking, TouchableOpacity  } from 'react-native'
 import React from 'react'
 import axios from 'axios';
 import Config from '../Config.js';
@@ -48,6 +48,12 @@ const Music = ({ navigation, route }) => {
     )
   };
 
+  const handlePlayButtonPress = () => {
+    // This is an example of how to play a track using its ID
+    const songId = songData.song.spotify_id;
+    Linking.openURL(`https://open.spotify.com/track/${songId}`);
+  };
+
   return (
     <SafeAreaView style={globalStyles.container}>
       <View style={{ flex: 1 }}>
@@ -56,6 +62,11 @@ const Music = ({ navigation, route }) => {
           <Image source={songData.song.img_url} style={styles.story} />
           <Text style={styles.textSongName}>{songData.song.name}</Text>
           <Text style={styles.textArtist}>{songData.artists[0].name}</Text>
+
+          <TouchableOpacity onPress={handlePlayButtonPress} style={styles.playButton}>
+            <Text style={styles.playButtonText}>Play on Spotify</Text>
+          </TouchableOpacity>
+
         </View>
 
         <View style={{ alignItems: 'flex-start', marginTop: 20, marginLeft: 10 }}>
@@ -90,6 +101,17 @@ const styles = StyleSheet.create({
     height: 30,
     marginLeft: 10,
     resizeMode: 'contain',
+  },
+  playButton: {
+    backgroundColor: '#1DB954', // Spotify green
+    padding: 10,
+    borderRadius: 20,
+    marginTop: 20,
+  },
+  playButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 })
 
