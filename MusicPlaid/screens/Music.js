@@ -50,20 +50,22 @@ const Music = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
-      <View style={{ alignItems: 'center' }}>
+      <View style={{ flex: 1 }}>
+        <View style={{ alignItems: 'center' }}>
 
-        <Image source={songData.song.img_url} style={styles.story} />
-        <Text style={styles.textSongName}>{songData.song.name}</Text>
-        <Text style={styles.textArtist}>{songData.artists[0].name}</Text>
-      </View>
+          <Image source={songData.song.img_url} style={styles.story} />
+          <Text style={styles.textSongName}>{songData.song.name}</Text>
+          <Text style={styles.textArtist}>{songData.artists[0].name}</Text>
+        </View>
 
-      <View style={{ alignItems: 'flex-start', marginTop: 20, marginLeft: 10 }}>
-        <Text style={globalStyles.subHeaderText}>Listeners</Text>
-        <PeopleList people={songData.listeners} navigation={navigation} />
-      </View>
+        <View style={{ alignItems: 'flex-start', marginTop: 20, marginLeft: 10 }}>
+          <Text style={globalStyles.subHeaderText}>Listeners</Text>
+          <PeopleList people={songData.listeners} navigation={navigation} />
+        </View>
 
-      {/* <Text style={styles.text}>Likes</Text>
-          <Text style={styles.text}>Comments</Text> */}
+        {/* <Text style={styles.text}>Likes</Text>
+            <Text style={styles.text}>Comments</Text> */}``
+        </View>
       <Footer />
     </SafeAreaView >
   )
