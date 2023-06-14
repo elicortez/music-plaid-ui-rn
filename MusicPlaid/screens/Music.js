@@ -8,6 +8,7 @@ import {
 import Header from '../components/Header'
 import { globalStyles } from '../styles/global';
 import Footer from '../components/Footer.js';
+import PeopleList from '../components/PeopleList';
 
 
 const Music = ({ navigation, route }) => {
@@ -58,12 +59,12 @@ const Music = ({ navigation, route }) => {
 
       <View style={{ alignItems: 'flex-start', marginTop: 20, marginLeft: 10 }}>
         <Text style={globalStyles.subHeaderText}>Listeners</Text>
-        <FlatList style={{ marginTop: 5, marginLeft: 5 }} data={songData.listeners} renderItem={renderListeners} keyExtractor={(item, index) => index.toString()} />
+        <PeopleList people={songData.listeners} navigation={navigation} />
       </View>
 
       {/* <Text style={styles.text}>Likes</Text>
           <Text style={styles.text}>Comments</Text> */}
-    <Footer/>
+      <Footer />
     </SafeAreaView >
   )
 }

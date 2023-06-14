@@ -7,32 +7,17 @@ import { StyleSheet } from 'react-native'
 import Header from '../components/Header'
 import { globalStyles } from '../styles/global';
 import Footer from '../components/Footer';
+import PeopleList from '../components/PeopleList';
 
-
-
-const PeopleList = ({ navigation, route }) => {
+const PeopleListScreen = ({ navigation, route }) => {
   console.log('people route params', route.params)
-
-  const handlePersonPressed = (id) => {
-    navigation.push('Profile', { id: id })
-  }
 
   return (
     <SafeAreaView style={globalStyles.container}>
       <View style={{ alignItems: 'center' }}>
         <Text style={{ color: 'white', fontSize: 20, marginTop: 10, fontWeight: 'bold' }}>{route.params.title}</Text>
       </View>
-      <View style={{ alignItems: 'flex-start' }}>
-        {route.params.people.map((person, index) => (
-          <TouchableOpacity key={index} onPress={() => handlePersonPressed(person.id)}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', margin: 10 }}>
-              <Image source={{ uri: person.img_url }} style={styles.imageThumbnail} />
-              <Text style={{ color: 'white', fontSize: 15, marginLeft: 10 }}>{person.display_name}</Text>
-            </View>
-          </TouchableOpacity>
-        ))}
-      </View>
-      <Footer/>
+      <PeopleList people={route.params.people} navigation={navigation} />
     </SafeAreaView>
   )
 }
@@ -48,4 +33,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default PeopleList
+export default PeopleListScreen
