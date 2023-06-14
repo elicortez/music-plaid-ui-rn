@@ -34,7 +34,7 @@ const Profile = ({ navigation, route }) => {
       })
         .then((response) => {
           console.log('User Data: ', response.data);
-          setUserData(response.data); // todo: this should set the user in a different context (UserContext) instead of AuthContext, to avoid confusion and differentiate
+          setUserData(response.data);
           setLoading(false);
         }).catch((error) => { console.log(error) }) // todo: do something when error is found, i.e., render an error screen
     } else {
