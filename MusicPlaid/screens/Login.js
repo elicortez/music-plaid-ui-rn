@@ -23,7 +23,7 @@ const discovery = {
 };
 
 const Login = ({ navigation }) => {
-
+  const [loggingIn, setLoggingIn] = React.useState(false);
   const { setUser, setSpotifyProfile, setAppBackedInfo, setTopArtists, setUserData } = useContext(AuthContext);
 
   let accessToken = null;
@@ -100,22 +100,37 @@ const Login = ({ navigation }) => {
     }
   }, [response]);
 
+  const loginButton = loggingIn ?
+    (<Button
+      title="Logging in..."
+      icon={{
+        name: 'spotify',
+        type: 'font-awesome',
+        color: 'white',
+        size: 30,
+      }}
+      disabled={true}
+      buttonStyle={styles.button}
+    />) :
+    (<Button
+      title="Login with Spotify"
+      icon={{
+        name: 'spotify',
+        type: 'font-awesome',
+        color: 'white',
+        size: 30,
+      }}
+      buttonStyle={styles.button}
+      onPress={() => {
+        setLoggingIn(true);
+        promptAsync();
+      }}
+    />);
+
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <Image style={{ width: 300, height: 100 }} source={require('../assets/image1.png')} />
-      <Button
-        title="Login with Spotify"
-        icon={{
-          name: 'spotify',
-          type: 'font-awesome',
-          color: 'white',
-          size: 30,
-        }}
-        buttonStyle={styles.button}
-        onPress={() => {
-          promptAsync();
-        }}
-      />
+      {loginButton}
       <View style={{ height: 100 }} />
     </KeyboardAvoidingView>
   );
