@@ -1,28 +1,26 @@
 import { View, Text, ScrollView, Image, StyleSheet } from 'react-native'
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import { AuthContext } from '../contexts/AuthContext';
 
-const FavoriteArtists = () => {
-  const {userData} = useContext(AuthContext);
+const FavoriteArtists = ({ userData }) => {
+    return (
+        <View style={{ marginBottom: 0 }}>
+            <View>
+                <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', marginBottom: 10, marginLeft: 10 }}>Favorite Artists</Text>
+            </View>
 
-  return (
-    <View style={{marginBottom: 0}}>
-        <View>
-        <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold', marginBottom:10, marginLeft: 10}}>Favorite Artists</Text>
+            <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+            >
+                {userData.fav_artists.map((artist, index) => (
+                    <View key={index} style={{ alignItems: 'center', marginBottom: 20 }}>
+                        <Image source={{ uri: artist.image_url }} style={styles.story} />
+                    </View>
+                ))}
+            </ScrollView>
         </View>
-
-    <ScrollView 
-        horizontal 
-        showsHorizontalScrollIndicator={false}
-        >
-            {userData.fav_artists.map((artist, index) => (
-                <View key={index} style={{alignItems: 'center', marginBottom:20}}>
-                    <Image source={{uri: artist.image_url}} style={styles.story} />
-                </View>
-            ))}
-    </ScrollView>
-    </View>
-  )
+    )
 }
 
 const styles = StyleSheet.create({

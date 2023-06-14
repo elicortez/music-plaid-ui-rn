@@ -1,10 +1,11 @@
 import { View, Text, ScrollView, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
 import React, { useContext } from 'react'
-import { UserContext } from '../contexts/UserContext';
 
 
-const LatestTracks = ({ navigation }) => {
-    const { userData } = useContext(UserContext);
+const LatestTracks = ({ navigation, userData }) => {
+    if (userData === null) {
+        return null;
+    }
 
     //todo: use flatlist instead
     const renderItem = (track, index) => {

@@ -1,10 +1,11 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 import React, { useContext } from 'react'
-import { UserContext } from '../contexts/UserContext';
 import { Icon } from 'react-native-elements';
 
-const ProfilePicure = () => {
-  const { userData } = useContext(UserContext);
+const ProfilePicure = ({ userData }) => {
+  if (userData === null) {
+    return null;
+  }
 
   return (
     <View>

@@ -1,12 +1,9 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useContext } from 'react'
-import { UserContext } from '../contexts/UserContext';
 import { NavigationContainer } from '@react-navigation/native';
 
 
-const ProfilePicure = ({ navigation }) => {
-  const { userData } = useContext(UserContext);
-
+const ProfileFollows = ({ navigation, userData }) => {
   const handleFollowingTap = () => {
     navigation.navigate('PeopleList', { title: 'Following', people: userData.following })
   };
@@ -14,6 +11,10 @@ const ProfilePicure = ({ navigation }) => {
   const handleFollowersTap = () => {
     navigation.navigate('PeopleList', { title: 'Followers', people: userData.followers })
   };
+
+  if (userData === null) {
+    return null;
+  }
 
   return (
     <View style={{ marginTop: 40, marginBottom: 40, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around' }}>
@@ -51,4 +52,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default ProfilePicure
+export default ProfileFollows

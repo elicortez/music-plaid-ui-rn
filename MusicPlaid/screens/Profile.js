@@ -9,7 +9,6 @@ import ProfilePicure from '../components/ProfilePicure';
 import ProfileFollows from '../components/ProfileFollows';
 import FavoriteArtists from '../components/FavoriteArtists';
 import LatestTracks from '../components/LatestTracks';
-import { UserContext, UserProvider } from '../contexts/UserContext';
 import { AuthContext } from '../contexts/AuthContext';
 import axios from 'axios';
 import Config from '../Config.js';
@@ -17,10 +16,9 @@ import { globalStyles } from '../styles/global';
 
 
 const Profile = ({ navigation, route }) => {
-  //const { setUserData } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
-  const { userData: authUserData, setUserData: setAuthUserData } = useContext(AuthContext);
-  const { setUserData } = useContext(UserContext);
+  const { userData: authUserData } = useContext(AuthContext);
+  const [userData, setUserData] = useState();
 
   useEffect(() => {
     console.log('Profile route params', route.params)
@@ -43,22 +41,20 @@ const Profile = ({ navigation, route }) => {
       setUserData(authUserData); // sets the user data from the authentication context
       setLoading(false);
     }
-  }, [])
+  }, [route.params])
 
   if (loading) {
     return (<SafeAreaView style={globalStyles.container}><Text style={styles.text}>Loading...</Text></SafeAreaView>);
   }
 
   return (
-    <UserProvider>
-      <SafeAreaView style={globalStyles.container}>
-        <ProfilePicure />
-        <ProfileFollows navigation={navigation} />
-        <FavoriteArtists />
-        <LatestTracks navigation={navigation} />
-        <Footer />
-      </SafeAreaView>
-    </UserProvider>
+    <SafeAreaView style={globalStyles.container}>
+      <ProfilePicure userData={userData} />
+      <ProfileFollows navigation={navigation} userData={userData} />
+      <FavoriteArtists userData={userData} />
+      <LatestTracks navigation={navigation} userData={userData} />
+      <Footer />
+    </SafeAreaView>
   )
 }
 
