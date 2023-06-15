@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image, FlatList, Linking, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, {useContext} from 'react'
 import axios from 'axios';
 import Config from '../Config.js';
 import {
@@ -9,10 +9,12 @@ import Header from '../components/Header'
 import { globalStyles } from '../styles/global';
 import Footer from '../components/Footer.js';
 import PeopleList from '../components/PeopleList';
-
+// import SpotifyPlayer from 'react-spotify-web-playback';
+// import { AuthContext, AuthProvider } from '../contexts/AuthContext';
 
 const Music = ({ navigation, route }) => {
   const [songData, setSongData] = React.useState(null);
+  // const { user } = useContext(AuthContext);
 
   console.log('Song route params', route)
 
@@ -66,7 +68,7 @@ const Music = ({ navigation, route }) => {
           <TouchableOpacity onPress={handlePlayButtonPress} style={styles.playButton}>
             <Text style={styles.playButtonText}>Play on Spotify</Text>
           </TouchableOpacity>
-
+          {/* <SpotifyPlayer token={user} uris={[`spotify:track:${songData.song.spotify_id}`]}/> */}
         </View>
 
         <View style={{ alignItems: 'flex-start', marginTop: 20, marginLeft: 10 }}>
@@ -79,6 +81,7 @@ const Music = ({ navigation, route }) => {
           <PeopleList people={songData.likers} navigation={navigation} />
         </View>
       </View>
+      
       <Footer />
     </SafeAreaView >
   )

@@ -34,6 +34,7 @@
     "react-native-screens": "^3.20.0",
     "react-native-web": "~0.18.10",
     "react-redux": "^8.0.7",
+    "react-spotify-web-playback": "^0.14.0",
     "yup": "^1.2.0"
   },
   "devDependencies": {
