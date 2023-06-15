@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, FlatList, Linking, TouchableOpacity  } from 'react-native'
+import { View, Text, StyleSheet, Image, FlatList, Linking, TouchableOpacity } from 'react-native'
 import React from 'react'
 import axios from 'axios';
 import Config from '../Config.js';
@@ -70,13 +70,15 @@ const Music = ({ navigation, route }) => {
         </View>
 
         <View style={{ alignItems: 'flex-start', marginTop: 20, marginLeft: 10 }}>
-          <Text style={globalStyles.subHeaderText}>Listeners</Text>
+          <Text style={globalStyles.subHeaderText}>Recent Listeners</Text>
           <PeopleList people={songData.listeners} navigation={navigation} />
         </View>
 
-        {/* <Text style={styles.text}>Likes</Text>
-            <Text style={styles.text}>Comments</Text> */}
+        <View style={{ alignItems: 'flex-start', marginTop: 20, marginLeft: 10 }}>
+          <Text style={globalStyles.subHeaderText}>Liked By</Text>
+          <PeopleList people={songData.likers} navigation={navigation} />
         </View>
+      </View>
       <Footer />
     </SafeAreaView >
   )
