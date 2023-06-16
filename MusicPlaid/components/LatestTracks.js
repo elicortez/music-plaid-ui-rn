@@ -14,7 +14,7 @@ const LatestTracks = ({ navigation, userData }) => {
             <TouchableOpacity key={index} onPress={() => {
                 navigation.navigate('Music', { title: 'Song', id: track.id })
             }}>
-                <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 10 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 10, marginLeft: 10 }}>
                     <Image source={{ uri: track.img_url }} style={styles.story} />
                     <View style={{ alignItems: 'flex-start' }}>
                         <Text style={{ color: 'white', fontSize: 15, marginLeft: 10 }}>{track.track_name}</Text>
