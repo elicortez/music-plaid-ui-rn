@@ -14,6 +14,7 @@ import PeopleList from '../components/PeopleList';
 
 const Music = ({ navigation, route }) => {
   const [songData, setSongData] = React.useState(null);
+  const [liked, setLiked] = React.useState(false);
   // const { user } = useContext(AuthContext);
 
   console.log('Song route params', route)
@@ -51,9 +52,15 @@ const Music = ({ navigation, route }) => {
   };
 
   const handlePlayButtonPress = () => {
-    // This is an example of how to play a track using its ID
     const songId = songData.song.spotify_id;
     Linking.openURL(`https://open.spotify.com/track/${songId}`);
+
+  };
+
+  const handleLike = () => {
+    const songId = songData.song.spotify_id;
+    console.log('Song id', songId);
+    setLiked(!liked);
   };
 
   return (
@@ -65,9 +72,23 @@ const Music = ({ navigation, route }) => {
           <Text style={styles.textSongName}>{songData.song.name}</Text>
           <Text style={styles.textArtist}>{songData.artists[0].name}</Text>
 
-          <TouchableOpacity onPress={handlePlayButtonPress} style={styles.playButton}>
-            <Text style={styles.playButtonText}>Play on Spotify</Text>
-          </TouchableOpacity>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+            <TouchableOpacity onPress={handlePlayButtonPress} style={styles.playButton}>
+              <Text style={styles.playButtonText}>Play on Spotify</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={handleLike}>
+            <Image
+              style={styles.footerIcon}
+              source={{
+                uri: liked 
+                ? 'https://img.icons8.com/ios-filled/60/E74C3C/like.png'
+                : 'https://img.icons8.com/fluency-systems-regular/60/ffffff/like--v1.png'
+              }}
+            />
+            </TouchableOpacity>
+          </View>
+
           {/* <SpotifyPlayer token={user} uris={[`spotify:track:${songData.song.spotify_id}`]}/> */}
         </View>
 
@@ -112,11 +133,17 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 20,
     marginTop: 20,
+    marginRight: 20,
   },
   playButtonText: {
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  footerIcon: {
+    height: 33,
+    width: 33,
+    marginTop: 20,
   },
 })
 
