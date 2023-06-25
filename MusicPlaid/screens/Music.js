@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image, FlatList, Linking, TouchableOpacity } from 'react-native'
-import React, {useContext} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import axios from 'axios';
 import Config from '../Config.js';
 import {
@@ -10,12 +10,12 @@ import { globalStyles } from '../styles/global';
 import Footer from '../components/Footer.js';
 import PeopleList from '../components/PeopleList';
 // import SpotifyPlayer from 'react-spotify-web-playback';
-// import { AuthContext, AuthProvider } from '../contexts/AuthContext';
+import { AuthContext, AuthProvider } from '../contexts/AuthContext';
 
 const Music = ({ navigation, route }) => {
-  const [songData, setSongData] = React.useState(null);
-  const [liked, setLiked] = React.useState(false);
-  // const { user } = useContext(AuthContext);
+  const [songData, setSongData] = useState(null);
+  const [liked, setLiked] = useState(false);
+  const { userData } = useContext(AuthContext);
 
   console.log('Song route params', route)
 
@@ -23,7 +23,7 @@ const Music = ({ navigation, route }) => {
     return (<Text style={globalStyles.text}>{item.display_name}</Text>)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     console.log('Song route id', route.params.id)
     const songId = route.params.id;
     axios(`${Config.songDataUrl}?id=${songId}`, {
@@ -38,6 +38,10 @@ const Music = ({ navigation, route }) => {
       .then((response) => {
         console.log('Song Data: ', response.data);
         setSongData(response.data);
+        if (response.data.song.id == '1201' || response.data.likers.some(liker => liker.id === userData.user.id)) {
+          setLiked(true);
+        }
+        console.log('Like Response:', liked);
       }).catch((error) => { console.log(error) })
   }, [])
 
@@ -58,9 +62,29 @@ const Music = ({ navigation, route }) => {
   };
 
   const handleLike = () => {
-    const songId = songData.song.spotify_id;
-    console.log('Song id', songId);
+    const songId = songData.song.id;
+    let url = `${Config.likeSongUrl}?id=${songId}`;
+    if (liked) {
+      url = `${Config.unlikeSongUrl}?id=${songId}`;
+    }
+
     setLiked(!liked);
+
+    axios(url, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "spotify-token": userData.user.cached_token,
+        Authorization: "Bearer " + userData.user.cached_token,
+      }
+    }
+    )
+    .then((response) => {
+      console.log('Url: ', url);
+      console.log('Response Data: ', response.data);
+    }).catch((error) => { console.log(error) })
+
   };
 
   return (
@@ -77,11 +101,11 @@ const Music = ({ navigation, route }) => {
               <Text style={styles.playButtonText}>Play on Spotify</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleLike}>
+            <TouchableOpacity onPress={() => handleLike()}>
             <Image
               style={styles.footerIcon}
               source={{
-                uri: liked 
+                uri: liked
                 ? 'https://img.icons8.com/ios-filled/60/E74C3C/like.png'
                 : 'https://img.icons8.com/fluency-systems-regular/60/ffffff/like--v1.png'
               }}
