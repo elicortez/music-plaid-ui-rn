@@ -38,7 +38,7 @@ const Music = ({ navigation, route }) => {
       .then((response) => {
         console.log('Song Data: ', response.data);
         setSongData(response.data);
-        if (response.data.song.id == '1201' || response.data.likers.some(liker => liker.id === userData.user.id)) {
+        if (response.data.likers.some(liker => liker.id === userData.user.id)) {
           setLiked(true);
         }
         console.log('Like Response:', liked);
