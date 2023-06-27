@@ -21,11 +21,17 @@ const Music = ({ navigation, route }) => {
   const [shownComments, setShownComments] = useState([]);
 
 
+  const handlePersonPressed = (id) => {
+    navigation.push('Profile', { id: id })
+  };
+
   console.log('Song route params', route)
 
   const renderComment = ({ item }) => (
     <View style={styles.commentContainer}>
-      <Text style={styles.userIdText}>{item.user_id}</Text>
+      <TouchableOpacity onPress={() => handlePersonPressed(item.user_id)}>
+        <Text style={styles.userIdText}>{item.user_id}</Text>
+      </TouchableOpacity>
       <Text style={styles.commentText}>{item.comment_text}</Text>
     </View>
   );
@@ -126,7 +132,8 @@ const Music = ({ navigation, route }) => {
     const newComment = {
       comment_id: Date.now(), // Temporary ID (can be replaced with a unique ID from the server)
       comment_text: userComment,
-      user_id: userData.user.display_name,
+      user_name: userData.user.display_name,
+      user_id: userData.user.id,
     };
 
     console.log('Shown comments:', shownComments);
