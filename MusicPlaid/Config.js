@@ -7,6 +7,7 @@ const Config = {
     unlikeSongUrl: 'https://musicplaid.wm.r.appspot.com/unlike_track',
     add_comment_url: 'https://musicplaid.wm.r.appspot.com/add_comment',
     follow_user: 'https://musicplaid.wm.r.appspot.com/follow_user',
+    unfollow_user: 'https://musicplaid.wm.r.appspot.com/unfollow_user',
     // userDataUrl: 'http://127.0.0.1:8080/user_data',
     // songDataUrl: 'http://127.0.0.1:8080/song_data',
     // spotifyDataUrl: 'http://127.0.0.1:8080/spotify_data',

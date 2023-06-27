@@ -30,6 +30,25 @@ const ProfilePicure = ({ userData, authUserDataId, authUserData }) => {
 
   };
 
+  
+  const handleRemoveUser = () => {
+    
+    axios(`${Config.unfollow_user}?id=${userData.user.id}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "spotify-token": authUserData.user.cached_token,
+        Authorization: "Bearer " + authUserData.user.cached_token,
+      }
+    }
+    )
+    .then((response) => {
+      console.log('Response Data: ', response.data);
+    }).catch((error) => { console.log(error) })
+
+  };
+
   return (
     <View>
       <View style={{ alignItems: 'center' }}>
@@ -42,16 +61,28 @@ const ProfilePicure = ({ userData, authUserDataId, authUserData }) => {
             size={30}
           />
           <Text style={{ color: 'white', fontSize: 18, marginTop: 1 }}> {userData.user.display_name}      </Text>
-          {userData.user.id !== authUserDataId && !userExists && (
-          <TouchableOpacity onPress={() => handleAddUser()}>
-            <Icon
-              name='add-circle'
-              type='MaterialIcons'
-              color='white'
-              size={30}
-            />
-          </TouchableOpacity>
-          )}
+          {userData.user.id !== authUserDataId && (
+              !userExists ? (
+                <TouchableOpacity onPress={() => handleAddUser()}>
+                  <Icon
+                    name='add-circle'
+                    type='MaterialIcons'
+                    color='white'
+                    size={30}
+                  />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity onPress={() => handleRemoveUser()}>
+                  <Icon
+                    name='remove-circle'
+                    type='MaterialIcons'
+                    color='white'
+                    size={30}
+                  />
+                </TouchableOpacity>
+              )
+            )}
+
         </View>
       </View>
     </View>
