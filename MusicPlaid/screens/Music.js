@@ -30,7 +30,7 @@ const Music = ({ navigation, route }) => {
   const renderComment = ({ item }) => (
     <View style={styles.commentContainer}>
       <TouchableOpacity onPress={() => handlePersonPressed(item.user_id)}>
-        <Text style={styles.userIdText}>{item.user_id}</Text>
+        <Text style={styles.userIdText}>{item.display_name}</Text>
       </TouchableOpacity>
       <Text style={styles.commentText}>{item.comment_text}</Text>
     </View>
@@ -56,7 +56,7 @@ const Music = ({ navigation, route }) => {
         }
 
         if (response.data.comments) {
-          setShownComments(response.data.comments.slice(0, 5));
+          setShownComments(response.data.comments.slice(0, 10));
         }
 
         
@@ -132,7 +132,7 @@ const Music = ({ navigation, route }) => {
     const newComment = {
       comment_id: Date.now(), // Temporary ID (can be replaced with a unique ID from the server)
       comment_text: userComment,
-      user_name: userData.user.display_name,
+      display_name: userData.user.display_name,
       user_id: userData.user.id,
     };
 
