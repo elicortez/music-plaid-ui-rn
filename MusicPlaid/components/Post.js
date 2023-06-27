@@ -6,14 +6,14 @@ const Post = ({post}) => {
   return (
     <View style={{marginBottom: 30}}>
         <Divider width={1} orientation="vertical" />
-        <PostHeader post={post}/>
+        {/* <PostHeader post={post}/> */}
         <PostImage post={post}/>
-        <View style={{marginHorizontal: 5, marginTop: 10}}>
+        {/* <View style={{marginHorizontal: 5, marginTop: 10}}>
             <PostFooter/>
             <Likes post={post}/>
             <Caption post={post}/>
             <CommentsSection post={post}/>
-        </View>
+        </View> */}
         
     </View>
   )
@@ -31,7 +31,7 @@ const PostHeader =({post}) => (
 
 
 const PostImage = ({post}) => (
-<View style={{ width: '100%', height: 120, alignItems: 'center', justifyContent: 'center' }}>
+<View style={{ width: '100%', height: 300, alignItems: 'center', justifyContent: 'center' }}>
   <Image source={{ uri: post.imageUrl }} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
   <View style={styles.overlay}>
     <Text style={{ textAlign: 'center', fontSize: 20, color: 'white' }}>
