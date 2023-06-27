@@ -50,7 +50,7 @@ const Profile = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
-      <ProfilePicure userData={userData} />
+      <ProfilePicure userData={userData} authUserDataId={authUserData.user.id} authUserData={authUserData} />
       <ProfileFollows navigation={navigation} userData={userData} />
       <FavoriteArtists userData={userData} />
       <LatestTracks navigation={navigation} userData={userData} />

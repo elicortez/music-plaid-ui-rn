@@ -45,7 +45,6 @@ const Music = ({ navigation, route }) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-
     }
     )
       .then((response) => {

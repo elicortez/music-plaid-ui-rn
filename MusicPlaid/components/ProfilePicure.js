@@ -1,11 +1,34 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React, { useContext } from 'react'
 import { Icon } from 'react-native-elements';
+import axios from 'axios';
+import Config from '../Config.js';
 
-const ProfilePicure = ({ userData }) => {
+const ProfilePicure = ({ userData, authUserDataId, authUserData }) => {
   if (userData === null) {
     return null;
   }
+
+  console.log('authUserData', authUserData)
+  const userExists = authUserData.following.some(user => user.id === userData.user.id);
+
+  const handleAddUser = () => {
+    
+    axios(`${Config.follow_user}?id=${userData.user.id}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "spotify-token": authUserData.user.cached_token,
+        Authorization: "Bearer " + authUserData.user.cached_token,
+      }
+    }
+    )
+    .then((response) => {
+      console.log('Response Data: ', response.data);
+    }).catch((error) => { console.log(error) })
+
+  };
 
   return (
     <View>
@@ -18,7 +41,17 @@ const ProfilePicure = ({ userData }) => {
             color='white'
             size={30}
           />
-          <Text style={{ color: 'white', fontSize: 18, marginTop: 1 }}> {userData.user.display_name}</Text>
+          <Text style={{ color: 'white', fontSize: 18, marginTop: 1 }}> {userData.user.display_name}      </Text>
+          {userData.user.id !== authUserDataId && !userExists && (
+          <TouchableOpacity onPress={() => handleAddUser()}>
+            <Icon
+              name='add-circle'
+              type='MaterialIcons'
+              color='white'
+              size={30}
+            />
+          </TouchableOpacity>
+          )}
         </View>
       </View>
     </View>
