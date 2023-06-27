@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, FlatList, Linking, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Image, FlatList, Linking, TouchableOpacity, Button, TextInput } from 'react-native'
 import React, {useContext, useState, useEffect} from 'react'
 import axios from 'axios';
 import Config from '../Config.js';
@@ -15,13 +15,20 @@ import { AuthContext, AuthProvider } from '../contexts/AuthContext';
 const Music = ({ navigation, route }) => {
   const [songData, setSongData] = useState(null);
   const [liked, setLiked] = useState(false);
-  const { userData } = useContext(AuthContext);
+  const {userData} = useContext(AuthContext);
+  const [userComment, setUserComment] = useState('');
+  const [showTextInput, setShowTextInput] = useState(false);
+  const [shownComments, setShownComments] = useState([]);
+
 
   console.log('Song route params', route)
 
-  const renderListeners = ({ item }) => {
-    return (<Text style={globalStyles.text}>{item.display_name}</Text>)
-  }
+  const renderComment = ({ item }) => (
+    <View style={styles.commentContainer}>
+      <Text style={styles.userIdText}>{item.user_id}</Text>
+      <Text style={styles.commentText}>{item.comment_text}</Text>
+    </View>
+  );
 
   useEffect(() => {
     console.log('Song route id', route.params.id)
@@ -41,6 +48,12 @@ const Music = ({ navigation, route }) => {
         if (response.data.likers.some(liker => liker.id === userData.user.id)) {
           setLiked(true);
         }
+
+        if (response.data.comments) {
+          setShownComments(response.data.comments.slice(0, 5));
+        }
+
+        
         console.log('Like Response:', liked);
       }).catch((error) => { console.log(error) })
   }, [])
@@ -87,6 +100,51 @@ const Music = ({ navigation, route }) => {
 
   };
 
+  const handleCommentChange = (text) => {
+    setUserComment(text);
+  };
+  
+  const handleCommentSubmit = () => {
+    // Perform actions with the submitted comment (e.g., send to server, update state, etc.)
+    console.log('Submitted comment:', userComment);
+
+    axios(`${Config.add_comment_url}?song_id=${songData.song.id}&user_id=${userData.user.id}&comment=${userComment}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "spotify-token": userData.user.cached_token,
+        Authorization: "Bearer " + userData.user.cached_token,
+      }
+    }
+    )
+    .then((response) => {
+      console.log('Response Data: ', response.data);
+    }).catch((error) => { console.log(error) })
+
+    // Create a new comment object with a temporary ID
+    const newComment = {
+      comment_id: Date.now(), // Temporary ID (can be replaced with a unique ID from the server)
+      comment_text: userComment,
+      user_id: userData.user.display_name,
+    };
+
+    console.log('Shown comments:', shownComments);
+
+    // Append the new comment to the shown comments
+    const updatedComments = [...shownComments, newComment];
+    setShownComments(updatedComments);
+
+    setUserComment('');
+    setShowTextInput(false); // Hide the text input after submitting
+
+    console.log('Updated comments:', updatedComments);
+  };
+
+  const handleCommentImagePress = () => {
+    setShowTextInput(true);
+  };
+
   return (
     <SafeAreaView style={globalStyles.container}>
       <View style={{ flex: 1 }}>
@@ -124,6 +182,39 @@ const Music = ({ navigation, route }) => {
         <View style={{ alignItems: 'flex-start', marginTop: 20, marginLeft: 10 }}>
           <Text style={globalStyles.subHeaderText}>Liked By</Text>
           <PeopleList people={songData.likers} navigation={navigation} />
+        </View>
+
+        <View style={{ alignItems: 'flex-start', marginTop: 20, marginLeft: 10}}>
+          <View>
+            <Text style={[globalStyles.subHeaderText, {marginBottom: 10}]}>Comments</Text>
+            <FlatList
+              data={shownComments}
+              renderItem={renderComment}
+              keyExtractor={item => item.comment_id.toString()}
+            />
+          </View>
+
+          {!showTextInput && (
+            <TouchableOpacity onPress={handleCommentImagePress}>
+              <Image style={styles.footerIcon} source={{ uri: 'https://img.icons8.com/fluency-systems-regular/60/ffffff/topic.png' }} />
+            </TouchableOpacity>
+          )}
+          {showTextInput && (
+            <View>
+              <TextInput
+                  style={{backgroundColor: 'white', padding: 10,  height: 100, width: 200, marginBottom: 10 }}
+                  placeholder="Type your comment here"
+                  value={userComment}
+                  onChangeText={handleCommentChange}
+                  multiline={true}
+                  numberOfLines={3}
+                />
+                <Button title="Submit" 
+                onPress={handleCommentSubmit}
+                />
+            </View>
+          )}
+          
         </View>
       </View>
       
@@ -168,6 +259,19 @@ const styles = StyleSheet.create({
     height: 33,
     width: 33,
     marginTop: 20,
+  },
+  commentContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  userIdText: {
+    fontWeight: 'bold',
+    marginRight: 4,
+    color: 'white',
+  },
+  commentText: {
+    color: 'white',
   },
 })
 
