@@ -10,15 +10,12 @@ import Footer from '../components/Footer';
 import { AuthContext } from '../contexts/AuthContext';
 
 const Feed = () => {
-  const { user, spotifyProfile } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   
 
   return (
     <SafeAreaView style={styles.container}>
         <Header/>
-        <Text style={{color: 'white'}}>{spotifyProfile.country}</Text>
-        <Text style={{color: 'white'}}>{spotifyProfile.email}</Text>
-        <Text style={{color: 'white'}}>{spotifyProfile.display_name}</Text>
          <ScrollView>
             {POSTS.map((post, index) => (
                 <Post key={index} post={post}/>

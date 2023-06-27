@@ -25,7 +25,7 @@ const discovery = {
 
 const Login = ({ navigation }) => {
   const [loggingIn, setLoggingIn] = React.useState(false);
-  const { setUser, setSpotifyProfile, setAppBackedInfo, setTopArtists, setUserData } = useContext(AuthContext);
+  const { setUser, setAppBackedInfo, setTopArtists, setUserData } = useContext(AuthContext);
 
   let accessToken = null;
   let access_token = null;
@@ -56,18 +56,6 @@ const Login = ({ navigation }) => {
 
   const fetchUserData = async (token) => {
     try {
-      const spotifyProfileResponse = await axios("https://api.spotify.com/v1/me", {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-      });
-
-      console.log('Spotify profile: ', spotifyProfileResponse.data);
-      setSpotifyProfile(spotifyProfileResponse.data);
-
       const userDataResponse = await axios(userDataUrl, {
         method: "GET",
         headers: {
