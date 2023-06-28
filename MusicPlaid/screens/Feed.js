@@ -4,7 +4,6 @@ import {
   } from 'react-native-safe-area-context';
 import React, { useContext, useState, useEffect } from 'react'
 import { SearchBar } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from '../components/Header'
 import Post from '../components/Post'
 import { POSTS } from '../data/posts';
@@ -84,16 +83,29 @@ const Feed = ({navigation}) => {
     </View>
   );
 
-
-
-  useEffect(() => {
-    if (searchText) {
+  const handleKeyPress = (key) => {
+    if (key === 'Enter') {
       handleSearch();
-    } else {
-      setSearchSongResults([]);
-      setSearchuserResults([]);
     }
-  }, [searchText]);
+  };
+
+  
+useEffect(() => {
+  let timerId = null;
+
+  if (searchText) {
+    timerId = setTimeout(() => {
+      handleSearch();
+    }, 1000); // Delay the search request by 1 second
+  } else {
+    setSearchSongResults([]);
+    setSearchuserResults([]);
+  }
+
+  return () => {
+    clearTimeout(timerId); // Clear the timer if component unmounts or searchText changes
+  };
+}, [searchText]);
 
 
   return (
@@ -103,6 +115,7 @@ const Feed = ({navigation}) => {
         <SearchBar
             onChangeText={(text) => setSearchText(text)}
             onCancel={() => setSearchText('')}
+            onKeyPress={handleKeyPress}
             placeholder="Search music, profiles, and more..."
             value={searchText}
         />
@@ -115,6 +128,7 @@ const Feed = ({navigation}) => {
         </ScrollView>
       ):(
         <View style={{ alignItems: 'flex-start', marginTop: 20, marginLeft: 10}}>
+          { searchSongResults.length > 0 && (
           <View>
             <Text style={[globalStyles.subHeaderText, {marginBottom: 10}]}>Tracks</Text>
             <FlatList
@@ -123,7 +137,9 @@ const Feed = ({navigation}) => {
               keyExtractor={(item, index) => index.toString()}
             />
           </View>
+          )}
 
+        { searchUserResults.length > 0 && (
           <View>
             <Text style={[globalStyles.subHeaderText, {marginBottom: 10}]}>Users</Text>
             <FlatList
@@ -132,6 +148,7 @@ const Feed = ({navigation}) => {
               keyExtractor={(item, index) => index.toString()}
             />
           </View>
+        )}
         </View>
       )}
         <Footer/>
