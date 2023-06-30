@@ -22,7 +22,7 @@ const Profile = ({ navigation, route }) => {
 
   useEffect(() => {
     console.log('Profile route params', route.params)
-    
+
     if (route.params && route.params.id) {
       console.log('fetching another user', route.params.id)
       // if an id is provided, we'll fetch the user data from the server
@@ -31,6 +31,7 @@ const Profile = ({ navigation, route }) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "spotify-token": authUserData.user.cached_token,
         },
       })
         .then((response) => {
